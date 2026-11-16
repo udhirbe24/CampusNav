@@ -6,7 +6,6 @@
 class RoutingController {
   constructor() {
     this.currentMode = 'shortest';
-    this.currentAlgorithm = 'astar';
     this.accessibleOnly = false;
     this.currentRouteData = null;
     this.alternativeRouteData = null;
@@ -14,7 +13,6 @@ class RoutingController {
 
   init() {
     this.setupModePills();
-    this.setupAlgorithmToggle();
     this.setupGeolocation();
   }
 
@@ -42,18 +40,6 @@ class RoutingController {
     });
   }
 
-  setupAlgorithmToggle() {
-    const toggle = document.getElementById('algorithm-select');
-    if (toggle) {
-      toggle.addEventListener('change', e => {
-        this.currentAlgorithm = e.target.value;
-        if (window.searchController.startNodeKey && window.searchController.destNodeKey) {
-          this.calculateRoute();
-        }
-      });
-    }
-  }
-
   setupGeolocation() {
     const gpsBtn = document.getElementById('use-current-location-btn');
     if (gpsBtn) {
@@ -74,15 +60,8 @@ class RoutingController {
             try {
               const res = await window.api.findNearestNode(lat, lon);
               if (res.success && res.data && res.data.node_key) {
-                window.searchController.startNodeKey = res.data.node_key;
-                window.searchController.startLabel = 'Current Location (GPS)';
-                const input = document.getElementById('start-location-input');
-                if (input) input.value = 'Current Location (GPS)';
                 window.Utils.showToast('Mapped to nearest campus walkway!', 'success');
-
-                if (window.searchController.destNodeKey) {
-                  this.calculateRoute();
-                }
+                window.searchController.selectLocation('start', res.data.node_key, 'Current Location (GPS)');
               }
             } catch (err) {
               window.Utils.showToast('Could not link GPS to campus walkway.', 'warning');
@@ -104,6 +83,9 @@ class RoutingController {
   }
 
   async calculateRoute() {
+    if (this.currentMode === 'emergency') {
+      return this.triggerEmergencyRouting();
+    }
     const fromNode = window.searchController.startNodeKey;
     const toNode = window.searchController.destNodeKey;
 
@@ -120,7 +102,6 @@ class RoutingController {
         fromNode,
         toNode,
         mode: this.currentMode,
-        algorithm: this.currentAlgorithm,
         accessibleOnly: this.accessibleOnly
       });
 
@@ -161,7 +142,7 @@ class RoutingController {
         toNode: window.searchController.destNodeKey,
         primaryPathNodes: this.currentRouteData.path_nodes,
         mode: this.currentMode,
-        algorithm: this.currentAlgorithm
+        accessibleOnly: this.accessibleOnly
       });
 
       if (!res.success || !res.data) {
@@ -180,21 +161,16 @@ class RoutingController {
   }
 
   async triggerEmergencyRouting() {
-    let startKey = window.searchController.startNodeKey;
+    const startKey = window.searchController.startNodeKey;
     if (!startKey) {
-      startKey = 'n_gate1';
-      window.searchController.startNodeKey = 'n_gate1';
-      window.searchController.startLabel = 'Gate 1 (Main Gate)';
-      const input = document.getElementById('start-location-input');
-      if (input) input.value = 'Gate 1 (Main Gate)';
+      window.Utils.showToast('Where are you? Choose your current location (or tap ⌖ for GPS) to find the nearest help.', 'warning', 5000);
+      document.getElementById('start-location-input')?.focus();
+      return;
     }
 
     try {
       window.Utils.showToast('Locating nearest campus emergency facility...', 'info');
-      const res = await window.api.getEmergencyRoute({
-        fromNode: startKey,
-        algorithm: this.currentAlgorithm
-      });
+      const res = await window.api.getEmergencyRoute({ fromNode: startKey });
 
       if (!res.success || !res.data) {
         window.Utils.showToast('Could not route to emergency facility.', 'error');
@@ -205,8 +181,12 @@ class RoutingController {
       window.campusMap.drawRoute(res.data.geojson, false);
 
       const facility = res.data.emergency_facility || {};
+      const destLabel = `${facility.name || 'Emergency Facility'} (${facility.facility_type || 'MEDICAL'})`;
       const destInput = document.getElementById('dest-location-input');
-      if (destInput) destInput.value = `${facility.name || 'Emergency Facility'} (${facility.facility_type || 'MEDICAL'})`;
+      if (destInput) destInput.value = destLabel;
+      // Remember the facility as the destination so switching mode re-routes to it
+      window.searchController.destNodeKey = res.data.path_nodes[res.data.path_nodes.length - 1];
+      window.searchController.destLabel = destLabel;
 
       this.renderRouteSummary(res.data.summary);
       this.renderTurnSteps(res.data.steps);
@@ -229,10 +209,11 @@ class RoutingController {
     if (distEl) distEl.textContent = summary.total_distance_text;
     if (timeEl) timeEl.textContent = summary.total_time_text;
 
+    const modeLabels = { shortest: 'Shortest walk', fastest: 'Fastest', accessible: 'Step-free', emergency: 'Emergency' };
     if (badgesEl) {
       let badgesHtml = `
-        <span class="badge badge-sage">Algorithm: ${summary.algorithm.toUpperCase()}</span>
-        <span class="badge badge-info">${summary.mode}</span>
+        <span class="badge badge-sage">${summary.algorithm}</span>
+        <span class="badge badge-info">${modeLabels[summary.mode] || summary.mode}</span>
       `;
       if (summary.has_stairs) {
         badgesHtml += `<span class="badge badge-warning">⚠️ Includes Stairs</span>`;
@@ -240,6 +221,14 @@ class RoutingController {
         badgesHtml += `<span class="badge badge-success">♿ Step-Free Accessible</span>`;
       }
       badgesEl.innerHTML = badgesHtml;
+    }
+
+    // Explain which algorithm the engine picked automatically, and why
+    const engineEl = document.getElementById('summary-engine');
+    if (engineEl) {
+      engineEl.textContent = summary.algorithm_reason
+        ? `Auto-selected ${summary.algorithm}: ${summary.algorithm_reason} (${summary.nodes_explored} points explored)`
+        : '';
     }
   }
 

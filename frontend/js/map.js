@@ -50,19 +50,22 @@ class CampusMap {
     // Initialize Leaflet map with STRICT campus boundary lockdown
     this.map = L.map(this.containerId, {
       zoomControl: false,
-      attributionControl: false,
+      attributionControl: true,
       maxBounds: this.thaparBounds,
       maxBoundsViscosity: 1.0, // 100% rigid wall — cannot drag outside Thapar University
       minZoom: 16.0,           // User cannot zoom out to see outside city/country
       maxZoom: 19.5
     }).fitBounds(this.thaparBounds);
 
-    // Clean Google Maps-style base map tiles (Voyager)
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    // OpenStreetMap base tiles (free, no API key needed; attribution is required by OSM)
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 20,
+      maxNativeZoom: 19,
       minZoom: 15,
-      bounds: this.thaparBounds
+      bounds: this.thaparBounds,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
     }).addTo(this.map);
+    this.map.attributionControl.setPrefix(false);
 
     // Layer groups in visual z-index order
     this.outerMaskLayer = L.layerGroup().addTo(this.map);
@@ -235,7 +238,9 @@ class CampusMap {
 
     const marker = L.marker([bldg.latitude, bldg.longitude], { icon: customIcon });
 
-    const entranceKey = (bldg.entrances && bldg.entrances.length > 0) ? bldg.entrances[0].node_key : `n_${bldg.id}`;
+    // Every building gets a routable node_key from the server (entrance, landmark or nearest walkway)
+    const entranceKey = bldg.node_key || ((bldg.entrances && bldg.entrances.length > 0) ? bldg.entrances[0].node_key : null);
+    if (!entranceKey) return marker;
 
     const popupContent = `
       <div class="gmap-popup-card">
@@ -350,7 +355,16 @@ class CampusMap {
     // Set starting and ending teardrop pins
     if (!isAlternative && latlngs.length >= 2) {
       this.setRouteEndpoints(latlngs[0], latlngs[latlngs.length - 1]);
-      this.map.fitBounds(polyline.getBounds(), { padding: [100, 100], maxZoom: 18.5 });
+      // Keep the route clear of the directions card (left on desktop, bottom sheet on mobile)
+      const card = document.getElementById('direction-card');
+      const narrow = window.innerWidth < 768;
+      const cardWidth = card && !narrow ? card.offsetWidth + 40 : 40;
+      const cardHeight = card && narrow ? Math.min(card.offsetHeight, window.innerHeight * 0.5) + 20 : 40;
+      this.map.fitBounds(polyline.getBounds(), {
+        paddingTopLeft: [cardWidth, 70],
+        paddingBottomRight: [80, cardHeight],
+        maxZoom: 18.5
+      });
     }
   }
 
