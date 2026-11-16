@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusNav — Administration & Operations Portal</title>
+
+  <!-- Design System & Admin Styles -->
+  <link rel="stylesheet" href="/css/design-tokens.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/admin.css">
+
+  <!-- Chart.js CDN for Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <div class="admin-layout">
+    <!-- Left Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-header">
+        <a href="/" style="display: flex; align-items: center; gap: 8px; color: white; text-decoration: none;">
+          <div class="brand-logo-icon" style="width: 28px; height: 28px; font-size: 0.9rem;">C</div>
+          <span>CampusNav Admin</span>
+        </a>
+      </div>
+
+      <nav class="admin-nav">
+        <div class="admin-nav-item active" data-target="section-analytics">
+          📊 Analytics & Metrics
+        </div>
+        <div class="admin-nav-item" data-target="section-pathways">
+          🚧 Pathways & Closures
+        </div>
+        <div class="admin-nav-item" data-target="section-reports">
+          ⚠️ Hazard & Blockage Reports
+        </div>
+        <div class="admin-nav-item" data-target="section-users">
+          👥 Registered Users
+        </div>
+        <a href="/app" class="admin-nav-item" style="margin-top: auto; color: var(--color-accent-light);">
+          🧭 Open Campus Map &rarr;
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Admin Content Area -->
+    <div class="admin-main">
+      <div class="admin-topbar">
+        <h2 style="font-size: var(--text-base); color: var(--color-primary); font-weight: var(--weight-bold);">
+          Thapar Institute Campus Operations Portal
+        </h2>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span class="badge badge-accent">Admin Role</span>
+          <button class="btn btn-secondary btn-sm" onclick="window.api.logout().then(() => window.location.href='/auth')">
+            Sign Out
+          </button>
+        </div>
+      </div>
+
+      <div class="admin-content">
+
+        <!-- SECTION 1: ANALYTICS -->
+        <div id="section-analytics" class="admin-section active">
+          
+          <!-- KPI Cards -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div>
+                <div id="stat-total-users" class="stat-value">--</div>
+                <div class="stat-label">Registered Users</div>
+              </div>
+              <div class="stat-icon">👥</div>
+            </div>
+
+            <div class="stat-card">
+              <div>
+                <div id="stat-total-buildings" class="stat-value">--</div>
+                <div class="stat-label">Mapped Buildings</div>
+              </div>
+              <div class="stat-icon">🏛️</div>
+            </div>
+
+            <div class="stat-card">
+              <div>
+                <div id="stat-total-pathways" class="stat-value">--</div>
+                <div class="stat-label">Walkway Edges</div>
+              </div>
+              <div class="stat-icon">🛤️</div>
+            </div>
+
+            <div class="stat-card">
+              <div>
+                <div id="stat-blocked-pathways" class="stat-value" style="color: var(--color-danger);">--</div>
+                <div class="stat-label">Active Closures</div>
+              </div>
+              <div class="stat-icon" style="color: var(--color-danger);">🚧</div>
+            </div>
+
+            <div class="stat-card">
+              <div>
+                <div id="stat-pending-reports" class="stat-value" style="color: #8c6014;">--</div>
+                <div class="stat-label">Pending Reports</div>
+              </div>
+              <div class="stat-icon" style="color: var(--color-warning);">⚠️</div>
+            </div>
+
+            <div class="stat-card">
+              <div>
+                <div id="stat-total-queries" class="stat-value">--</div>
+                <div class="stat-label">Total Routes Generated</div>
+              </div>
+              <div class="stat-icon">🧭</div>
+            </div>
+          </div>
+
+          <!-- Charts Grid -->
+          <div class="charts-grid">
+            <!-- Chart 1: Mode Breakdown -->
+            <div class="chart-card">
+              <h3 class="chart-title">Route Optimization Mode Usage</h3>
+              <div class="chart-wrapper">
+                <canvas id="chart-modes-usage"></canvas>
+              </div>
+            </div>
+
+            <!-- Chart 2: Popular Destinations -->
+            <div class="chart-card">
+              <h3 class="chart-title">Most Frequent Destinations</h3>
+              <div class="chart-wrapper">
+                <canvas id="chart-popular-dest"></canvas>
+              </div>
+            </div>
+
+            <!-- Chart 3: Users by Role -->
+            <div class="chart-card">
+              <h3 class="chart-title">User Demographics by Role</h3>
+              <div class="chart-wrapper">
+                <canvas id="chart-users-role"></canvas>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SECTION 2: PATHWAYS & CLOSURES -->
+        <div id="section-pathways" class="admin-section">
+          <div class="table-container">
+            <div class="table-header-bar">
+              <div>
+                <h3 style="font-size: var(--text-base); color: var(--color-primary); font-weight: bold;">Campus Walkways & Active Closures</h3>
+                <p style="font-size: var(--text-xs); color: var(--color-text-muted);">Manage pathway availability. Blocking a pathway automatically detours pathfinding routing algorithms in real time.</p>
+              </div>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Connection</th>
+                  <th>Distance</th>
+                  <th>Accessibility</th>
+                  <th>Status</th>
+                  <th>Closure Reason</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="pathways-table-body">
+                <!-- Populated via admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SECTION 3: HAZARD REPORTS -->
+        <div id="section-reports" class="admin-section">
+          <div class="table-container">
+            <div class="table-header-bar">
+              <div>
+                <h3 style="font-size: var(--text-base); color: var(--color-primary); font-weight: bold;">User-Reported Obstructions & Hazards</h3>
+                <p style="font-size: var(--text-xs); color: var(--color-text-muted);">Review submitted issues from students and campus visitors.</p>
+              </div>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Type</th>
+                  <th>Description</th>
+                  <th>Reported By</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="reports-table-body">
+                <!-- Populated via admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SECTION 4: REGISTERED USERS -->
+        <div id="section-users" class="admin-section">
+          <div class="table-container">
+            <div class="table-header-bar">
+              <div>
+                <h3 style="font-size: var(--text-base); color: var(--color-primary); font-weight: bold;">Registered Campus Accounts</h3>
+                <p style="font-size: var(--text-xs); color: var(--color-text-muted);">View all student, faculty, and administrator accounts.</p>
+              </div>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Full Name</th>
+                  <th>Email</th>
+                  <th>Student ID</th>
+                  <th>Role</th>
+                  <th>Registered</th>
+                </tr>
+              </thead>
+              <tbody id="users-table-body">
+                <!-- Populated via admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Close Pathway -->
+  <div class="modal-backdrop" id="modal-close-pathway">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Mark Pathway as Blocked</h3>
+        <button class="modal-close" onclick="window.Utils.closeModal('modal-close-pathway')">✕</button>
+      </div>
+      <form id="form-close-pathway">
+        <div class="form-group">
+          <label class="form-label" for="closure-reason">Reason for Closure</label>
+          <select id="closure-reason" class="select" required>
+            <option value="Temporary Construction">Temporary Construction</option>
+            <option value="Maintenance / Repairs">Maintenance / Repairs</option>
+            <option value="Campus Event Closure">Campus Event Closure</option>
+            <option value="Waterlogged / Weather Hazard">Waterlogged / Weather Hazard</option>
+            <option value="Restricted Access">Restricted Access</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="closure-desc">Closure Details & Notes</label>
+          <textarea id="closure-desc" class="textarea" rows="3" placeholder="Expected reopening time or alternative directions..."></textarea>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: var(--space-2); margin-top: var(--space-4);">
+          <button type="button" class="btn btn-secondary" onclick="window.Utils.closeModal('modal-close-pathway')">Cancel</button>
+          <button type="submit" class="btn btn-danger">Confirm Closure</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Application Logic Scripts -->
+  <script src="/js/api.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/admin.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.adminController.init();
+    });
+  </script>
+</body>
+</html>

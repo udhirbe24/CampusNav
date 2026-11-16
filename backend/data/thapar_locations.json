@@ -1,0 +1,322 @@
+{
+  "campus_id": "thapar",
+  "campus_name": "Thapar Institute of Engineering and Technology (TIET), Patiala",
+  "data_note": "Exact digital twin of the official Thapar Campus Road Map: Gate 1, Gate 2, Gate 3, Gate 4, Hostels A-M, CS Block, New Library, Old Library, B/C/G Blocks, Nirvana, Sports Center, Dispensary, and All Walkways.",
+  "buildings": [
+    {
+      "id": "b_gate_1",
+      "name": "Gate 1 (Main Gate - Bhadson Road)",
+      "short_code": "GATE1",
+      "category": "OTHER",
+      "description": "Main campus institutional entrance on Bhadson Road with security and parking",
+      "latitude": 30.3540,
+      "longitude": 76.3715
+    },
+    {
+      "id": "b_gate_2",
+      "name": "Gate 2 (Old Library Gate)",
+      "short_code": "GATE2",
+      "category": "OTHER",
+      "description": "Eastern campus gate near the Old Library and Mechanical Workshops",
+      "latitude": 30.3575,
+      "longitude": 76.3710
+    },
+    {
+      "id": "b_gate_3",
+      "name": "Gate 3 (Western Gate)",
+      "short_code": "GATE3",
+      "category": "OTHER",
+      "description": "Main western entrance gate next to Hostel M and Faculty Residences",
+      "latitude": 30.3538,
+      "longitude": 76.3570
+    },
+    {
+      "id": "b_gate_4",
+      "name": "Gate 4 (Polytechnic College Gate)",
+      "short_code": "GATE4",
+      "category": "OTHER",
+      "description": "Northern campus entrance near Thapar Polytechnic College and Hostel L",
+      "latitude": 30.3605,
+      "longitude": 76.3655
+    },
+    {
+      "id": "b_cs_block",
+      "name": "CS Block (Computer Science & Engineering)",
+      "short_code": "CS",
+      "category": "ACADEMIC",
+      "description": "Main Computer Science Department block, software labs, and research wings",
+      "latitude": 30.3565,
+      "longitude": 76.3670
+    },
+    {
+      "id": "b_lt",
+      "name": "LT (Lecture Theatres Complex)",
+      "short_code": "LT",
+      "category": "ACADEMIC",
+      "description": "Central multi-tiered lecture halls and smart classrooms",
+      "latitude": 30.3556,
+      "longitude": 76.3668
+    },
+    {
+      "id": "b_new_library",
+      "name": "New Central Library (Chern Library)",
+      "short_code": "NEWLIB",
+      "category": "LIBRARY",
+      "description": "Flagship multi-story modern central library and digital archives",
+      "latitude": 30.3556,
+      "longitude": 76.3678
+    },
+    {
+      "id": "b_old_library",
+      "name": "Old Library Complex",
+      "short_code": "OLDLIB",
+      "category": "LIBRARY",
+      "description": "Heritage T-shaped library complex near Gate 2",
+      "latitude": 30.3582,
+      "longitude": 76.3695
+    },
+    {
+      "id": "b_b_c_block",
+      "name": "B Block & C Block",
+      "short_code": "BC",
+      "category": "ACADEMIC",
+      "description": "Interconnected core engineering academic and tutorial blocks",
+      "latitude": 30.3545,
+      "longitude": 76.3690
+    },
+    {
+      "id": "b_g_block",
+      "name": "G Block",
+      "short_code": "GBLK",
+      "category": "ACADEMIC",
+      "description": "Academic building situated between Nirvana Park and B/C Block",
+      "latitude": 30.3548,
+      "longitude": 76.3675
+    },
+    {
+      "id": "b_tan",
+      "name": "TAN Building / Auditorium",
+      "short_code": "TAN",
+      "category": "ACADEMIC",
+      "description": "Seminar auditoriums and academic administrative offices",
+      "latitude": 30.3553,
+      "longitude": 76.3662
+    },
+    {
+      "id": "b_mech_workshops",
+      "name": "Mechanical Engineering Workshops",
+      "short_code": "MECH",
+      "category": "ACADEMIC",
+      "description": "Engineering foundry, machine shop, welding, and fabrication bays",
+      "latitude": 30.3558,
+      "longitude": 76.3698
+    },
+    {
+      "id": "b_main_audi",
+      "name": "Main Auditorium",
+      "short_code": "AUDI",
+      "category": "ACADEMIC",
+      "description": "University central auditorium and convocation centre",
+      "latitude": 30.3538,
+      "longitude": 76.3688
+    },
+    {
+      "id": "b_nirvana",
+      "name": "Nirvana (Central Park & Campus Lake)",
+      "short_code": "NIRVANA",
+      "category": "OTHER",
+      "description": "Lush central recreational garden with S-shaped ornamental lake and pathways",
+      "latitude": 30.3538,
+      "longitude": 76.3650
+    },
+    {
+      "id": "b_sbop",
+      "name": "SBOP / State Bank of India (SBI)",
+      "short_code": "SBI",
+      "category": "OTHER",
+      "description": "On-campus bank branch and 24/7 ATM facilities",
+      "latitude": 30.3528,
+      "longitude": 76.3665
+    },
+    {
+      "id": "b_entrance_parking",
+      "name": "Entrance Parking Area",
+      "short_code": "PARK",
+      "category": "PARKING",
+      "description": "Designated visitor and student two-wheeler and four-wheeler parking",
+      "latitude": 30.3535,
+      "longitude": 76.3705
+    },
+    {
+      "id": "b_dispensary",
+      "name": "Dispensary / Campus Health Centre",
+      "short_code": "MED",
+      "category": "MEDICAL",
+      "description": "Campus dispensary, first-aid station, and 24/7 emergency care",
+      "latitude": 30.3550,
+      "longitude": 76.3638
+    },
+    {
+      "id": "b_sports_center",
+      "name": "Sports Center & Swimming Pool",
+      "short_code": "SPORT",
+      "category": "SPORTS",
+      "description": "Indoor sports complex, gymnasium, and competition swimming pool",
+      "latitude": 30.3562,
+      "longitude": 76.3638
+    },
+    {
+      "id": "b_girls_hostel",
+      "name": "Girls Hostel (G & Cong)",
+      "short_code": "GH",
+      "category": "HOSTEL",
+      "description": "Girls Hostel blocks G and Cong adjacent to sports center",
+      "latitude": 30.3560,
+      "longitude": 76.3652
+    },
+    {
+      "id": "b_cricket",
+      "name": "Cricket Ground & Pavilion",
+      "short_code": "CRIC",
+      "category": "SPORTS",
+      "description": "Main cricket stadium field with central turf pitch",
+      "latitude": 30.3578,
+      "longitude": 76.3622
+    },
+    {
+      "id": "b_tennis",
+      "name": "Tennis Court & Fete Area Ground",
+      "short_code": "TEN",
+      "category": "SPORTS",
+      "description": "Outdoor tennis courts and festival fete play grounds",
+      "latitude": 30.3560,
+      "longitude": 76.3622
+    },
+    {
+      "id": "b_football",
+      "name": "Football & Synthetic Athletics Track",
+      "short_code": "TRACK",
+      "category": "SPORTS",
+      "description": "Full-size football field inside an Olympic synthetic running track",
+      "latitude": 30.3560,
+      "longitude": 76.3595
+    },
+    {
+      "id": "b_oat_cos",
+      "name": "OAT / COS Complex",
+      "short_code": "OAT",
+      "category": "ACADEMIC",
+      "description": "Open Air Theatre and Center of Student activities",
+      "latitude": 30.3556,
+      "longitude": 76.3608
+    },
+    {
+      "id": "b_faculty_res",
+      "name": "Faculty Residence",
+      "short_code": "FR",
+      "category": "HOSTEL",
+      "description": "Staff and Professor residential quarters",
+      "latitude": 30.3575,
+      "longitude": 76.3582
+    },
+    {
+      "id": "b_hostel_m",
+      "name": "Hostel M",
+      "short_code": "HM",
+      "category": "HOSTEL",
+      "description": "Hostel M (Anantam Hall), western residential complex",
+      "latitude": 30.3540,
+      "longitude": 76.3585
+    },
+    {
+      "id": "b_hostel_j",
+      "name": "Hostel J (Tejas Hall)",
+      "short_code": "HJ",
+      "category": "HOSTEL",
+      "description": "Hostel J - Tejas Hall with twin curved wings",
+      "latitude": 30.3540,
+      "longitude": 76.3618
+    },
+    {
+      "id": "b_hostel_h",
+      "name": "Hostel H (Vyan Hall)",
+      "short_code": "HH",
+      "category": "HOSTEL",
+      "description": "Hostel H - Vyan Hall overlooking Nirvana Park",
+      "latitude": 30.3538,
+      "longitude": 76.3632
+    },
+    {
+      "id": "b_hostel_d",
+      "name": "Hostel D (Neeram Hall)",
+      "short_code": "HD",
+      "category": "HOSTEL",
+      "description": "Hostel D - Neeram Hall, south-western corner",
+      "latitude": 30.3520,
+      "longitude": 76.3580
+    },
+    {
+      "id": "b_hostel_c",
+      "name": "Hostel C (Prithvi Hall)",
+      "short_code": "HC",
+      "category": "HOSTEL",
+      "description": "Hostel C - Prithvi Hall on south road",
+      "latitude": 30.3519,
+      "longitude": 76.3598
+    },
+    {
+      "id": "b_hostel_b",
+      "name": "Hostel B (Amritam Hall)",
+      "short_code": "HB",
+      "category": "HOSTEL",
+      "description": "Hostel B - Amritam Hall on south road",
+      "latitude": 30.3518,
+      "longitude": 76.3616
+    },
+    {
+      "id": "b_hostel_a",
+      "name": "Hostel A",
+      "short_code": "HA",
+      "category": "HOSTEL",
+      "description": "Hostel A on south road",
+      "latitude": 30.3517,
+      "longitude": 76.3634
+    },
+    {
+      "id": "b_hostel_pg",
+      "name": "PG Hostel",
+      "short_code": "HPG",
+      "category": "HOSTEL",
+      "description": "Postgraduate student hostel south of Nirvana",
+      "latitude": 30.3522,
+      "longitude": 76.3650
+    },
+    {
+      "id": "b_hostel_k",
+      "name": "Hostel K",
+      "short_code": "HK",
+      "category": "HOSTEL",
+      "description": "Hostel K north of the Cricket ground",
+      "latitude": 30.3596,
+      "longitude": 76.3622
+    },
+    {
+      "id": "b_hostel_l",
+      "name": "Hostel L",
+      "short_code": "HL",
+      "category": "HOSTEL",
+      "description": "Hostel L near Gate 4 and Polytechnic College",
+      "latitude": 30.3602,
+      "longitude": 76.3642
+    },
+    {
+      "id": "b_polytechnic",
+      "name": "Polytechnic College",
+      "short_code": "POLY",
+      "category": "ACADEMIC",
+      "description": "Thapar Polytechnic College complex near Gate 4",
+      "latitude": 30.3604,
+      "longitude": 76.3652
+    }
+  ]
+}

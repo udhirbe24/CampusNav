@@ -1,0 +1,737 @@
+{
+  "type": "FeatureCollection",
+  "name": "thapar_nodes",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3715,
+          30.354
+        ]
+      },
+      "properties": {
+        "node_key": "n_gate1",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_gate_1",
+        "description": "Gate 1 (Main Gate - Bhadson Road)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.371,
+          30.3575
+        ]
+      },
+      "properties": {
+        "node_key": "n_gate2",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_gate_2",
+        "description": "Gate 2 (Old Library Gate)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.357,
+          30.3538
+        ]
+      },
+      "properties": {
+        "node_key": "n_gate3",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_gate_3",
+        "description": "Gate 3 (Western Gate)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3655,
+          30.3605
+        ]
+      },
+      "properties": {
+        "node_key": "n_gate4",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_gate_4",
+        "description": "Gate 4 (Polytechnic College Gate)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3575,
+          30.3538
+        ]
+      },
+      "properties": {
+        "node_key": "n_junc_g3",
+        "node_type": "intersection",
+        "is_accessible": true,
+        "building_id": null,
+        "description": "Gate 3 Internal Junction"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3585,
+          30.354
+        ]
+      },
+      "properties": {
+        "node_key": "n_hm",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_hostel_m",
+        "description": "Hostel M Entrance"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3585,
+          30.3538
+        ]
+      },
+      "properties": {
+        "node_key": "n_junc_west",
+        "node_type": "intersection",
+        "is_accessible": true,
+        "building_id": null,
+        "description": "Hostel M / Faculty Link"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3582,
+          30.3575
+        ]
+      },
+      "properties": {
+        "node_key": "n_faculty",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_faculty_res",
+        "description": "Faculty Residence"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3575,
+          30.352
+        ]
+      },
+      "properties": {
+        "node_key": "n_junc_south_west",
+        "node_type": "intersection",
+        "is_accessible": true,
+        "building_id": null,
+        "description": "South Road West Junction"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.358,
+          30.352
+        ]
+      },
+      "properties": {
+        "node_key": "n_hd",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_hostel_d",
+        "description": "Hostel D Entrance"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3598,
+          30.3519
+        ]
+      },
+      "properties": {
+        "node_key": "n_hc",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_hostel_c",
+        "description": "Hostel C Entrance"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3616,
+          30.3518
+        ]
+      },
+      "properties": {
+        "node_key": "n_hb",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_hostel_b",
+        "description": "Hostel B Entrance"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3634,
+          30.3517
+        ]
+      },
+      "properties": {
+        "node_key": "n_ha",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_hostel_a",
+        "description": "Hostel A Entrance"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.365,
+          30.3522
+        ]
+      },
+      "properties": {
+        "node_key": "n_hpg",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_hostel_pg",
+        "description": "PG Hostel Entrance"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3665,
+          30.3528
+        ]
+      },
+      "properties": {
+        "node_key": "n_sbop",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_sbop",
+        "description": "SBOP / State Bank of India"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3705,
+          30.3535
+        ]
+      },
+      "properties": {
+        "node_key": "n_parking",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_entrance_parking",
+        "description": "Entrance Parking Area"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3595,
+          30.356
+        ]
+      },
+      "properties": {
+        "node_key": "n_track",
+        "node_type": "landmark",
+        "is_accessible": true,
+        "building_id": "b_football",
+        "description": "Football & Synthetic Track"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3608,
+          30.3556
+        ]
+      },
+      "properties": {
+        "node_key": "n_oat",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_oat_cos",
+        "description": "OAT / COS Complex"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3608,
+          30.3538
+        ]
+      },
+      "properties": {
+        "node_key": "n_junc_mid_west",
+        "node_type": "intersection",
+        "is_accessible": true,
+        "building_id": null,
+        "description": "OAT / Track South Junction"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3618,
+          30.354
+        ]
+      },
+      "properties": {
+        "node_key": "n_hj",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_hostel_j",
+        "description": "Hostel J (Tejas Hall)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3632,
+          30.3538
+        ]
+      },
+      "properties": {
+        "node_key": "n_hh",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_hostel_h",
+        "description": "Hostel H (Vyan Hall)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3622,
+          30.3538
+        ]
+      },
+      "properties": {
+        "node_key": "n_junc_mid_jh",
+        "node_type": "intersection",
+        "is_accessible": true,
+        "building_id": null,
+        "description": "Hostel J / H Crossway"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3622,
+          30.3578
+        ]
+      },
+      "properties": {
+        "node_key": "n_cricket",
+        "node_type": "landmark",
+        "is_accessible": true,
+        "building_id": "b_cricket",
+        "description": "Cricket Ground & Pavilion"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3622,
+          30.356
+        ]
+      },
+      "properties": {
+        "node_key": "n_tennis",
+        "node_type": "landmark",
+        "is_accessible": true,
+        "building_id": "b_tennis",
+        "description": "Tennis Court & Fete Area"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3638,
+          30.3562
+        ]
+      },
+      "properties": {
+        "node_key": "n_sports_ctr",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_sports_center",
+        "description": "Sports Center & Pool"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3638,
+          30.355
+        ]
+      },
+      "properties": {
+        "node_key": "n_dispensary",
+        "node_type": "emergency",
+        "is_accessible": true,
+        "building_id": "b_dispensary",
+        "description": "Dispensary / Campus Health Centre"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3652,
+          30.356
+        ]
+      },
+      "properties": {
+        "node_key": "n_girls_hostel",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_girls_hostel",
+        "description": "Girls Hostel (G & Cong)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3622,
+          30.3596
+        ]
+      },
+      "properties": {
+        "node_key": "n_hk",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_hostel_k",
+        "description": "Hostel K Entrance"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3642,
+          30.3602
+        ]
+      },
+      "properties": {
+        "node_key": "n_hl",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_hostel_l",
+        "description": "Hostel L Entrance"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3652,
+          30.3604
+        ]
+      },
+      "properties": {
+        "node_key": "n_poly",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_polytechnic",
+        "description": "Polytechnic College"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3655,
+          30.3602
+        ]
+      },
+      "properties": {
+        "node_key": "n_junc_poly",
+        "node_type": "intersection",
+        "is_accessible": true,
+        "building_id": null,
+        "description": "Gate 4 / Polytechnic Junction"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.365,
+          30.3538
+        ]
+      },
+      "properties": {
+        "node_key": "n_nirvana",
+        "node_type": "landmark",
+        "is_accessible": true,
+        "building_id": "b_nirvana",
+        "description": "Nirvana Park & Lake"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3662,
+          30.3553
+        ]
+      },
+      "properties": {
+        "node_key": "n_tan",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_tan",
+        "description": "TAN Building"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3675,
+          30.3548
+        ]
+      },
+      "properties": {
+        "node_key": "n_g_block",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_g_block",
+        "description": "G Block"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.367,
+          30.3565
+        ]
+      },
+      "properties": {
+        "node_key": "n_cs_block",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_cs_block",
+        "description": "CS Block"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3668,
+          30.3556
+        ]
+      },
+      "properties": {
+        "node_key": "n_lt",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_lt",
+        "description": "LT Lecture Theatres"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3678,
+          30.3556
+        ]
+      },
+      "properties": {
+        "node_key": "n_new_lib",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_new_library",
+        "description": "New Central Library"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.369,
+          30.3545
+        ]
+      },
+      "properties": {
+        "node_key": "n_bc_block",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_b_c_block",
+        "description": "B Block & C Block"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3688,
+          30.3538
+        ]
+      },
+      "properties": {
+        "node_key": "n_main_audi",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_main_audi",
+        "description": "Main Auditorium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3698,
+          30.3558
+        ]
+      },
+      "properties": {
+        "node_key": "n_mech",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_mech_workshops",
+        "description": "Mechanical Workshops"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3695,
+          30.3582
+        ]
+      },
+      "properties": {
+        "node_key": "n_old_lib",
+        "node_type": "entrance",
+        "is_accessible": true,
+        "building_id": "b_old_library",
+        "description": "Old Library Complex"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.37,
+          30.3575
+        ]
+      },
+      "properties": {
+        "node_key": "n_junc_east_ring",
+        "node_type": "intersection",
+        "is_accessible": true,
+        "building_id": null,
+        "description": "Old Library / Gate 2 Junction"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.3705,
+          30.354
+        ]
+      },
+      "properties": {
+        "node_key": "n_junc_gate1",
+        "node_type": "intersection",
+        "is_accessible": true,
+        "building_id": null,
+        "description": "Gate 1 Entrance Junction"
+      }
+    }
+  ]
+}

@@ -1,0 +1,558 @@
+/* =============================================================
+   CampusNav — Google Maps Style Floating UI & Campus Layout
+   ============================================================= */
+
+/* --- Global Top Navigation Header (Used on Landing & Auth pages) --- */
+.header-nav {
+  height: 64px;
+  background-color: var(--color-primary-dark, #173F35);
+  color: var(--color-white, #FFFFFF);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--color-white, #FFFFFF);
+}
+
+.brand-logo-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background-color: var(--color-accent, #D6A756);
+  color: var(--color-primary-dark, #173F35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.15rem;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+
+.brand-title {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.brand-subtitle {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-sage-light, #D2DDD0);
+  font-weight: 400;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-link {
+  color: var(--color-sage-light, #D2DDD0);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--color-white, #FFFFFF);
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 640px) {
+  .desktop-only {
+    display: none;
+  }
+}
+
+/* Main App Fullscreen Canvas */
+.app-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #E8ECE9;
+  font-family: Roboto, Arial, sans-serif;
+}
+
+/* Fullscreen Map View */
+.map-container {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* --- GOOGLE MAPS FLOATING DIRECTION CARD (Top-Left) --- */
+.gmap-direction-card {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 396px;
+  max-width: calc(100vw - 32px);
+  background: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 -1px 0px rgba(0, 0, 0, 0.02);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  transition: all 0.2s ease;
+}
+
+/* Top Branding Bar with Thapar Logo */
+.gmap-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px 6px;
+  border-bottom: 1px solid #F1F3F4;
+}
+
+.gmap-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #202124;
+}
+
+.gmap-brand-logo {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background-color: #173F35;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.gmap-brand-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #202124;
+}
+
+.gmap-brand-subtitle {
+  font-size: 11px;
+  color: #5F6368;
+}
+
+/* Google Maps Travel Mode Icons Bar */
+.gmap-mode-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 6px 12px;
+  border-bottom: 1px solid #E8EAED;
+  background: #FFFFFF;
+}
+
+.gmap-mode-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  color: #5F6368;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 4px;
+  position: relative;
+  transition: all 0.15s ease;
+}
+
+.gmap-mode-tab:hover {
+  background: #F1F3F4;
+  color: #202124;
+}
+
+.gmap-mode-tab.active {
+  color: #1A73E8;
+}
+
+.gmap-mode-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 8px;
+  right: 8px;
+  height: 3px;
+  background: #1A73E8;
+  border-radius: 3px 3px 0 0;
+}
+
+.gmap-mode-icon {
+  font-size: 17px;
+}
+
+/* Two-Point Input Box (Origin & Destination) */
+.gmap-inputs-box {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  position: relative;
+  gap: 12px;
+}
+
+.gmap-input-connectors {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding-top: 6px;
+  flex-shrink: 0;
+}
+
+.gmap-dot-origin {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid #1A73E8;
+  background: #FFFFFF;
+}
+
+.gmap-connector-dots {
+  width: 2px;
+  height: 20px;
+  border-left: 2px dotted #BDC1C6;
+}
+
+.gmap-dot-dest {
+  width: 10px;
+  height: 10px;
+  background: #EA4335;
+  border-radius: 50%;
+}
+
+.gmap-input-fields {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+
+.gmap-input-row {
+  position: relative;
+}
+
+.gmap-text-input {
+  width: 100%;
+  height: 34px;
+  padding: 0 10px;
+  font-size: 13px;
+  color: #202124;
+  background: #F1F3F4;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.gmap-text-input:focus {
+  background: #FFFFFF;
+  border-color: #1A73E8;
+  box-shadow: 0 1px 2px rgba(26, 115, 232, 0.2);
+}
+
+.gmap-swap-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #5F6368;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  transition: background 0.15s ease;
+}
+
+.gmap-swap-btn:hover {
+  background: #F1F3F4;
+  color: #202124;
+}
+
+/* Autocomplete Dropdown */
+.gmap-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #FFFFFF;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  max-height: 240px;
+  overflow-y: auto;
+  z-index: 1100;
+  display: none;
+  border: 1px solid #E8EAED;
+}
+
+.gmap-dropdown.active {
+  display: block;
+}
+
+.gmap-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid #F1F3F4;
+  font-size: 13px;
+  color: #3C4043;
+}
+
+.gmap-dropdown-item:hover {
+  background: #F8F9FA;
+  color: #1A73E8;
+}
+
+/* Quick Campus Chips (Below Inputs) */
+.gmap-chips-tray {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 4px 14px 10px;
+  scrollbar-width: none;
+}
+.gmap-chips-tray::-webkit-scrollbar {
+  display: none;
+}
+
+.gmap-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: #F1F3F4;
+  border-radius: 16px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #3C4043;
+  border: 1px solid #E8EAED;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.gmap-chip:hover {
+  background: #E8F0FE;
+  color: #1A73E8;
+  border-color: #D2E3FC;
+}
+
+/* --- GOOGLE MAPS ROUTE RESULT BOTTOM SHEET / DRAWER --- */
+.gmap-route-panel {
+  display: none;
+  background: #FFFFFF;
+  border-top: 1px solid #E8EAED;
+  padding: 14px 16px;
+  border-radius: 0 0 8px 8px;
+  max-height: 380px;
+  overflow-y: auto;
+}
+
+.gmap-route-metrics {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.gmap-route-time {
+  font-size: 24px;
+  font-weight: 700;
+  color: #188038; /* Google Maps Green for walking/fastest route */
+  letter-spacing: -0.02em;
+}
+
+.gmap-route-dist {
+  font-size: 14px;
+  color: #70757A;
+  font-weight: 500;
+}
+
+.gmap-route-subtitle {
+  font-size: 12px;
+  color: #5F6368;
+  margin-bottom: 12px;
+}
+
+.gmap-actions-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.gmap-btn-start {
+  flex: 1;
+  background: #1A73E8;
+  color: #FFFFFF;
+  border: none;
+  height: 36px;
+  border-radius: 18px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.gmap-btn-start:hover {
+  background: #155724;
+}
+
+.gmap-btn-alt {
+  background: #FFFFFF;
+  color: #1A73E8;
+  border: 1px solid #DADCE0;
+  height: 36px;
+  border-radius: 18px;
+  padding: 0 14px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.gmap-btn-alt:hover {
+  background: #F8F9FA;
+}
+
+/* Turn by Turn Directions List */
+.gmap-directions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #F1F3F4;
+}
+
+.gmap-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 12.5px;
+  color: #3C4043;
+}
+
+.gmap-step-arrow {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #E8F0FE;
+  color: #1A73E8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.gmap-step-text {
+  flex-grow: 1;
+  line-height: 1.35;
+}
+
+.gmap-step-dist {
+  font-size: 11px;
+  color: #70757A;
+}
+
+/* Top App Header Strip (Compact) */
+.gmap-top-strip {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.gmap-header-btn {
+  height: 36px;
+  padding: 0 14px;
+  background: #FFFFFF;
+  color: #3C4043;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 18px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.gmap-header-btn:hover {
+  background: #F8F9FA;
+  color: #1A73E8;
+}
+
+/* Campus Lockdown Boundary Pill (Shows active boundary protection) */
+.campus-lockdown-badge {
+  position: absolute;
+  bottom: 24px;
+  left: 20px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 6px 14px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  font-size: 11px;
+  font-weight: 500;
+  color: #173F35;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #DADCE0;
+}
+
+/* Responsive Mobile Layout */
+@media (max-width: 600px) {
+  .gmap-direction-card {
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    width: auto;
+  }
+
+  .gmap-top-strip {
+    display: none;
+  }
+}

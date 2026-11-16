@@ -1,0 +1,282 @@
+/* =============================================================
+   CampusNav — Google Maps Style Campus Navigation Styles
+   Dedicated strictly within Thapar University Boundary
+   ============================================================= */
+
+/* Base map container */
+.leaflet-container {
+  background-color: #E8ECE9 !important;
+  font-family: 'Google Sans', Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif !important;
+  outline: none;
+}
+
+/* Thapar Campus Dedicated Ground Styling */
+.campus-perimeter-polygon {
+  fill: #FFFFFF;
+  fill-opacity: 0.95;
+  stroke: #173F35;
+  stroke-width: 2.5;
+  stroke-dasharray: 6, 6;
+}
+
+.campus-greenery {
+  fill: #CEEAD6;
+  fill-opacity: 0.8;
+  stroke: none;
+}
+
+.campus-sports-field {
+  fill: #A8DAB5;
+  fill-opacity: 0.9;
+  stroke: #81C995;
+  stroke-width: 1.5;
+}
+
+/* Google Maps Style Teardrop Markers */
+.gmap-marker-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.15s ease-out;
+}
+
+.gmap-marker-pin:hover {
+  transform: scale(1.15) translateY(-2px);
+  z-index: 1000 !important;
+}
+
+/* Teardrop Destination Pin (Google Red #EA4335) */
+.gmap-pin-dest {
+  width: 32px;
+  height: 42px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 34' fill='%23EA4335'%3E%3Cpath d='M12 0C5.37 0 0 5.37 0 12c0 9 12 22 12 22s12-13 12-22c0-6.63-5.37-12-12-12zm0 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z'/%3E%3C/svg%3E") no-repeat center center;
+  background-size: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+/* Teardrop Start Pin (Google Green #34A853) */
+.gmap-pin-start {
+  width: 32px;
+  height: 42px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 34' fill='%2334A853'%3E%3Cpath d='M12 0C5.37 0 0 5.37 0 12c0 9 12 22 12 22s12-13 12-22c0-6.63-5.37-12-12-12zm0 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z'/%3E%3C/svg%3E") no-repeat center center;
+  background-size: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+/* Google Maps Campus Place Labels */
+.gmap-place-marker {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #FFFFFF;
+  padding: 3px 8px 3px 6px;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  font-size: 11px;
+  font-weight: 500;
+  color: #3C4043;
+  white-space: nowrap;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  pointer-events: auto;
+  user-select: none;
+  transition: all 0.15s ease;
+}
+
+.gmap-place-marker:hover {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+  transform: translateY(-1px);
+  color: #1A73E8;
+}
+
+.gmap-place-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.gmap-icon-academic { background-color: #1A73E8; }
+.gmap-icon-hostel { background-color: #9334E6; }
+.gmap-icon-sports { background-color: #137333; }
+.gmap-icon-gate { background-color: #D93025; }
+.gmap-icon-medical { background-color: #EA4335; }
+.gmap-icon-other { background-color: #5F6368; }
+
+/* User Location GPS Dot (Google Blue #4285F4) */
+.gmap-user-gps {
+  width: 16px;
+  height: 16px;
+  background-color: #1A73E8;
+  border: 2.5px solid #FFFFFF;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.gmap-user-gps::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: rgba(66, 133, 244, 0.25);
+  animation: gpsPulse 2s infinite ease-out;
+}
+
+@keyframes gpsPulse {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(2.0); opacity: 0; }
+}
+
+/* Google Maps InfoWindow (Popup) */
+.leaflet-popup-content-wrapper {
+  background: #FFFFFF !important;
+  color: #3C4043 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3) !important;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  font-family: Roboto, Arial, sans-serif !important;
+}
+
+.gmap-popup-card {
+  padding: 14px 16px;
+  min-width: 210px;
+}
+
+.gmap-popup-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: #202124;
+  margin-bottom: 2px;
+}
+
+.gmap-popup-category {
+  font-size: 11px;
+  color: #70757A;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.gmap-popup-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #ECEFF1;
+}
+
+.gmap-popup-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 16px;
+  border: 1px solid #DADCE0;
+  background: #FFFFFF;
+  color: #1A73E8;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.gmap-popup-btn:hover {
+  background: #F1F3F4;
+  border-color: #1A73E8;
+}
+
+.gmap-popup-btn.primary {
+  background: #1A73E8;
+  color: #FFFFFF;
+  border-color: #1A73E8;
+}
+.gmap-popup-btn.primary:hover {
+  background: #155724;
+}
+
+/* Floating FAB Action Buttons (Google Maps bottom-right style) */
+.gmap-fab-stack {
+  position: absolute;
+  right: 16px;
+  bottom: 24px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gmap-fab-btn {
+  width: 40px;
+  height: 40px;
+  background: #FFFFFF;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #5F6368;
+  font-size: 18px;
+  transition: all 0.15s ease;
+}
+
+.gmap-fab-btn:hover {
+  background: #F8F9FA;
+  color: #202124;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.gmap-zoom-group {
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.gmap-zoom-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #5F6368;
+  cursor: pointer;
+}
+
+.gmap-zoom-btn:hover {
+  background: #F1F3F4;
+  color: #202124;
+}
+
+.gmap-zoom-btn:first-child {
+  border-bottom: 1px solid #E8EAED;
+}
+
+/* Alias for compatibility */
+.map-floating-controls {
+  composes: gmap-fab-stack;
+}
+.map-control-btn {
+  composes: gmap-fab-btn;
+}
+

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusNav — Sign In & Registration</title>
+  
+  <link rel="stylesheet" href="/css/design-tokens.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body class="auth-page">
+
+  <!-- Header -->
+  <header class="header-nav">
+    <a href="/" class="brand-wrapper">
+      <div class="brand-logo-icon">C</div>
+      <div>
+        <span class="brand-title">CampusNav</span>
+        <span class="brand-subtitle">Thapar Institute, Patiala</span>
+      </div>
+    </a>
+    <div class="header-actions">
+      <a href="/app" class="nav-link">Campus Map</a>
+    </div>
+  </header>
+
+  <!-- Auth Main Container -->
+  <div class="auth-container">
+    <div class="auth-card">
+      
+      <div class="auth-header">
+        <h1 class="auth-title">Welcome to CampusNav</h1>
+        <p class="auth-subtitle">Sign in to access personalized routing & report campus hazards</p>
+      </div>
+
+      <!-- Auth Tabs -->
+      <div class="auth-tabs">
+        <button id="tab-login" class="auth-tab active">Sign In</button>
+        <button id="tab-register" class="auth-tab">Create Account</button>
+      </div>
+
+      <!-- Login Section -->
+      <div id="login-section">
+        <form id="login-form">
+          <div class="form-group">
+            <label class="form-label" for="login-email">Email Address</label>
+            <input type="email" id="login-email" class="input" placeholder="e.g. name@thapar.edu" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="login-password">Password</label>
+            <input type="password" id="login-password" class="input" placeholder="Enter your password" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: var(--space-4);">
+            Sign In
+          </button>
+        </form>
+
+        <!-- Convenience helper for university evaluators and testers -->
+        <div style="margin-top: var(--space-5); padding: var(--space-3); background-color: var(--color-secondary-bg); border-radius: var(--radius-md); font-size: var(--text-xs); color: var(--color-text-secondary); border: 1px dashed var(--color-border);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <strong style="color: var(--color-primary);">Demo Admin Account:</strong>
+            <button type="button" class="btn btn-secondary btn-sm" style="font-size: 11px; padding: 2px 8px; height: auto;" onclick="document.getElementById('login-email').value='admin@thapar.edu'; document.getElementById('login-password').value='AdminPassword123!';">
+              Auto-Fill
+            </button>
+          </div>
+          Email: <code style="background: white; padding: 1px 4px; border-radius: 3px;">admin@thapar.edu</code><br>
+          Password: <code style="background: white; padding: 1px 4px; border-radius: 3px;">AdminPassword123!</code>
+        </div>
+      </div>
+
+      <!-- Register Section -->
+      <div id="register-section" style="display: none;">
+        <form id="register-form">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+            <div class="form-group">
+              <label class="form-label" for="reg-firstname">First Name</label>
+              <input type="text" id="reg-firstname" class="input" placeholder="First Name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="reg-lastname">Last Name</label>
+              <input type="text" id="reg-lastname" class="input" placeholder="Last Name" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-email">University / Personal Email</label>
+            <input type="email" id="reg-email" class="input" placeholder="e.g. student@thapar.edu" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-role">Campus Affiliation / Role</label>
+            <select id="reg-role" class="select" required>
+              <option value="student">Student</option>
+              <option value="faculty">Faculty / Staff</option>
+              <option value="visitor">Campus Visitor / Guest</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-studentid">Roll Number / Student ID (Optional)</label>
+            <input type="text" id="reg-studentid" class="input" placeholder="e.g. 102103456">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-password">Password (min 8 chars, 1 uppercase, 1 digit)</label>
+            <input type="password" id="reg-password" class="input" placeholder="Create a strong password" required minlength="8">
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: var(--space-4);">
+            Create Account
+          </button>
+        </form>
+      </div>
+
+      <div class="auth-footer">
+        <a href="/app" style="color: var(--color-primary);">Continue as Guest Visitor &rarr;</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

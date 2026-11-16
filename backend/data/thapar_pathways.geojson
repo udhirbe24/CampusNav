@@ -1,0 +1,1630 @@
+{
+  "type": "FeatureCollection",
+  "name": "thapar_pathways",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.357,
+            30.3538
+          ],
+          [
+            76.3575,
+            30.3538
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p001",
+        "from_node": "n_gate3",
+        "to_node": "n_junc_g3",
+        "distance_meters": 48.0,
+        "estimated_seconds": 34.3,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3575,
+            30.3538
+          ],
+          [
+            76.3585,
+            30.3538
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p002",
+        "from_node": "n_junc_g3",
+        "to_node": "n_junc_west",
+        "distance_meters": 96.0,
+        "estimated_seconds": 68.6,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3585,
+            30.3538
+          ],
+          [
+            76.3585,
+            30.354
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p003",
+        "from_node": "n_junc_west",
+        "to_node": "n_hm",
+        "distance_meters": 22.2,
+        "estimated_seconds": 15.9,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3585,
+            30.3538
+          ],
+          [
+            76.3608,
+            30.3538
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p004",
+        "from_node": "n_junc_west",
+        "to_node": "n_junc_mid_west",
+        "distance_meters": 220.7,
+        "estimated_seconds": 157.6,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3608,
+            30.3538
+          ],
+          [
+            76.3622,
+            30.3538
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p005",
+        "from_node": "n_junc_mid_west",
+        "to_node": "n_junc_mid_jh",
+        "distance_meters": 134.3,
+        "estimated_seconds": 95.9,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3622,
+            30.3538
+          ],
+          [
+            76.3618,
+            30.354
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p006",
+        "from_node": "n_junc_mid_jh",
+        "to_node": "n_hj",
+        "distance_meters": 44.4,
+        "estimated_seconds": 31.7,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3622,
+            30.3538
+          ],
+          [
+            76.3632,
+            30.3538
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p007",
+        "from_node": "n_junc_mid_jh",
+        "to_node": "n_hh",
+        "distance_meters": 96.0,
+        "estimated_seconds": 68.6,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3622,
+            30.3538
+          ],
+          [
+            76.365,
+            30.3538
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p008",
+        "from_node": "n_junc_mid_jh",
+        "to_node": "n_nirvana",
+        "distance_meters": 268.7,
+        "estimated_seconds": 191.9,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.365,
+            30.3538
+          ],
+          [
+            76.3662,
+            30.3553
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p009",
+        "from_node": "n_nirvana",
+        "to_node": "n_tan",
+        "distance_meters": 202.7,
+        "estimated_seconds": 144.8,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.365,
+            30.3538
+          ],
+          [
+            76.3675,
+            30.3548
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p010",
+        "from_node": "n_nirvana",
+        "to_node": "n_g_block",
+        "distance_meters": 264.4,
+        "estimated_seconds": 188.9,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3675,
+            30.3548
+          ],
+          [
+            76.369,
+            30.3545
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p011",
+        "from_node": "n_g_block",
+        "to_node": "n_bc_block",
+        "distance_meters": 147.7,
+        "estimated_seconds": 105.5,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.369,
+            30.3545
+          ],
+          [
+            76.3688,
+            30.3538
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p012",
+        "from_node": "n_bc_block",
+        "to_node": "n_main_audi",
+        "distance_meters": 80.2,
+        "estimated_seconds": 57.3,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3688,
+            30.3538
+          ],
+          [
+            76.3705,
+            30.354
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p013",
+        "from_node": "n_main_audi",
+        "to_node": "n_junc_gate1",
+        "distance_meters": 164.6,
+        "estimated_seconds": 117.6,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3705,
+            30.354
+          ],
+          [
+            76.3715,
+            30.354
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p014",
+        "from_node": "n_junc_gate1",
+        "to_node": "n_gate1",
+        "distance_meters": 96.0,
+        "estimated_seconds": 68.6,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3575,
+            30.3538
+          ],
+          [
+            76.3575,
+            30.352
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p015",
+        "from_node": "n_junc_g3",
+        "to_node": "n_junc_south_west",
+        "distance_meters": 200.2,
+        "estimated_seconds": 143.0,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3575,
+            30.352
+          ],
+          [
+            76.358,
+            30.352
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p016",
+        "from_node": "n_junc_south_west",
+        "to_node": "n_hd",
+        "distance_meters": 48.0,
+        "estimated_seconds": 34.3,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.358,
+            30.352
+          ],
+          [
+            76.3598,
+            30.3519
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p017",
+        "from_node": "n_hd",
+        "to_node": "n_hc",
+        "distance_meters": 173.1,
+        "estimated_seconds": 123.6,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3598,
+            30.3519
+          ],
+          [
+            76.3616,
+            30.3518
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p018",
+        "from_node": "n_hc",
+        "to_node": "n_hb",
+        "distance_meters": 173.1,
+        "estimated_seconds": 123.6,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3616,
+            30.3518
+          ],
+          [
+            76.3634,
+            30.3517
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p019",
+        "from_node": "n_hb",
+        "to_node": "n_ha",
+        "distance_meters": 173.1,
+        "estimated_seconds": 123.6,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3634,
+            30.3517
+          ],
+          [
+            76.365,
+            30.3522
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p020",
+        "from_node": "n_ha",
+        "to_node": "n_hpg",
+        "distance_meters": 163.3,
+        "estimated_seconds": 116.6,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.365,
+            30.3522
+          ],
+          [
+            76.3665,
+            30.3528
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p021",
+        "from_node": "n_hpg",
+        "to_node": "n_sbop",
+        "distance_meters": 158.6,
+        "estimated_seconds": 113.3,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3665,
+            30.3528
+          ],
+          [
+            76.3705,
+            30.3535
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p022",
+        "from_node": "n_sbop",
+        "to_node": "n_parking",
+        "distance_meters": 391.6,
+        "estimated_seconds": 279.7,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3705,
+            30.3535
+          ],
+          [
+            76.3705,
+            30.354
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p023",
+        "from_node": "n_parking",
+        "to_node": "n_junc_gate1",
+        "distance_meters": 55.6,
+        "estimated_seconds": 39.7,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.358,
+            30.352
+          ],
+          [
+            76.3585,
+            30.3538
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p024",
+        "from_node": "n_hd",
+        "to_node": "n_junc_west",
+        "distance_meters": 205.8,
+        "estimated_seconds": 147.0,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3616,
+            30.3518
+          ],
+          [
+            76.3618,
+            30.354
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p025",
+        "from_node": "n_hb",
+        "to_node": "n_hj",
+        "distance_meters": 245.4,
+        "estimated_seconds": 175.3,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3634,
+            30.3517
+          ],
+          [
+            76.3632,
+            30.3538
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p026",
+        "from_node": "n_ha",
+        "to_node": "n_hh",
+        "distance_meters": 234.3,
+        "estimated_seconds": 167.4,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.365,
+            30.3522
+          ],
+          [
+            76.365,
+            30.3538
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p027",
+        "from_node": "n_hpg",
+        "to_node": "n_nirvana",
+        "distance_meters": 177.9,
+        "estimated_seconds": 127.1,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3665,
+            30.3528
+          ],
+          [
+            76.369,
+            30.3545
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p028",
+        "from_node": "n_sbop",
+        "to_node": "n_bc_block",
+        "distance_meters": 305.4,
+        "estimated_seconds": 218.1,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3585,
+            30.3538
+          ],
+          [
+            76.3582,
+            30.3575
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p029",
+        "from_node": "n_junc_west",
+        "to_node": "n_faculty",
+        "distance_meters": 412.4,
+        "estimated_seconds": 294.6,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3608,
+            30.3538
+          ],
+          [
+            76.3595,
+            30.356
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p030",
+        "from_node": "n_junc_mid_west",
+        "to_node": "n_track",
+        "distance_meters": 274.6,
+        "estimated_seconds": 196.1,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3595,
+            30.356
+          ],
+          [
+            76.3582,
+            30.3575
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p031",
+        "from_node": "n_track",
+        "to_node": "n_faculty",
+        "distance_meters": 208.3,
+        "estimated_seconds": 148.8,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3608,
+            30.3538
+          ],
+          [
+            76.3608,
+            30.3556
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p032",
+        "from_node": "n_junc_mid_west",
+        "to_node": "n_oat",
+        "distance_meters": 200.2,
+        "estimated_seconds": 143.0,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3608,
+            30.3556
+          ],
+          [
+            76.3622,
+            30.356
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p033",
+        "from_node": "n_oat",
+        "to_node": "n_tennis",
+        "distance_meters": 141.5,
+        "estimated_seconds": 101.1,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3622,
+            30.356
+          ],
+          [
+            76.3622,
+            30.3578
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p034",
+        "from_node": "n_tennis",
+        "to_node": "n_cricket",
+        "distance_meters": 200.2,
+        "estimated_seconds": 143.0,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3622,
+            30.356
+          ],
+          [
+            76.3638,
+            30.3562
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p035",
+        "from_node": "n_tennis",
+        "to_node": "n_sports_ctr",
+        "distance_meters": 155.1,
+        "estimated_seconds": 110.8,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3638,
+            30.3562
+          ],
+          [
+            76.3638,
+            30.355
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p036",
+        "from_node": "n_sports_ctr",
+        "to_node": "n_dispensary",
+        "distance_meters": 133.4,
+        "estimated_seconds": 95.3,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3638,
+            30.355
+          ],
+          [
+            76.3622,
+            30.3538
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p037",
+        "from_node": "n_dispensary",
+        "to_node": "n_junc_mid_jh",
+        "distance_meters": 203.4,
+        "estimated_seconds": 145.3,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3638,
+            30.3562
+          ],
+          [
+            76.3652,
+            30.356
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p038",
+        "from_node": "n_sports_ctr",
+        "to_node": "n_girls_hostel",
+        "distance_meters": 136.2,
+        "estimated_seconds": 97.3,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3652,
+            30.356
+          ],
+          [
+            76.3662,
+            30.3553
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p039",
+        "from_node": "n_girls_hostel",
+        "to_node": "n_tan",
+        "distance_meters": 123.6,
+        "estimated_seconds": 88.3,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3622,
+            30.3578
+          ],
+          [
+            76.3622,
+            30.3596
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p040",
+        "from_node": "n_cricket",
+        "to_node": "n_hk",
+        "distance_meters": 200.2,
+        "estimated_seconds": 143.0,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3622,
+            30.3596
+          ],
+          [
+            76.3642,
+            30.3602
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p041",
+        "from_node": "n_hk",
+        "to_node": "n_hl",
+        "distance_meters": 203.2,
+        "estimated_seconds": 145.1,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3642,
+            30.3602
+          ],
+          [
+            76.3652,
+            30.3604
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p042",
+        "from_node": "n_hl",
+        "to_node": "n_poly",
+        "distance_meters": 98.5,
+        "estimated_seconds": 70.4,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3652,
+            30.3604
+          ],
+          [
+            76.3655,
+            30.3602
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p043",
+        "from_node": "n_poly",
+        "to_node": "n_junc_poly",
+        "distance_meters": 36.4,
+        "estimated_seconds": 26.0,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3655,
+            30.3602
+          ],
+          [
+            76.3655,
+            30.3605
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p044",
+        "from_node": "n_junc_poly",
+        "to_node": "n_gate4",
+        "distance_meters": 33.4,
+        "estimated_seconds": 23.9,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3652,
+            30.356
+          ],
+          [
+            76.3642,
+            30.3602
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p045",
+        "from_node": "n_girls_hostel",
+        "to_node": "n_hl",
+        "distance_meters": 476.8,
+        "estimated_seconds": 340.6,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3655,
+            30.3602
+          ],
+          [
+            76.3695,
+            30.3582
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p046",
+        "from_node": "n_junc_poly",
+        "to_node": "n_old_lib",
+        "distance_meters": 443.6,
+        "estimated_seconds": 316.9,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3695,
+            30.3582
+          ],
+          [
+            76.37,
+            30.3575
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p047",
+        "from_node": "n_old_lib",
+        "to_node": "n_junc_east_ring",
+        "distance_meters": 91.4,
+        "estimated_seconds": 65.3,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.37,
+            30.3575
+          ],
+          [
+            76.371,
+            30.3575
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p048",
+        "from_node": "n_junc_east_ring",
+        "to_node": "n_gate2",
+        "distance_meters": 95.9,
+        "estimated_seconds": 68.5,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.37,
+            30.3575
+          ],
+          [
+            76.3698,
+            30.3558
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p049",
+        "from_node": "n_junc_east_ring",
+        "to_node": "n_mech",
+        "distance_meters": 190.0,
+        "estimated_seconds": 135.7,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3698,
+            30.3558
+          ],
+          [
+            76.369,
+            30.3545
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p050",
+        "from_node": "n_mech",
+        "to_node": "n_bc_block",
+        "distance_meters": 163.7,
+        "estimated_seconds": 116.9,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3698,
+            30.3558
+          ],
+          [
+            76.3705,
+            30.354
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p051",
+        "from_node": "n_mech",
+        "to_node": "n_junc_gate1",
+        "distance_meters": 211.1,
+        "estimated_seconds": 150.8,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "asphalt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3662,
+            30.3553
+          ],
+          [
+            76.3668,
+            30.3556
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p052",
+        "from_node": "n_tan",
+        "to_node": "n_lt",
+        "distance_meters": 66.5,
+        "estimated_seconds": 47.5,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3668,
+            30.3556
+          ],
+          [
+            76.367,
+            30.3565
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p053",
+        "from_node": "n_lt",
+        "to_node": "n_cs_block",
+        "distance_meters": 101.9,
+        "estimated_seconds": 72.8,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3668,
+            30.3556
+          ],
+          [
+            76.3678,
+            30.3556
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p054",
+        "from_node": "n_lt",
+        "to_node": "n_new_lib",
+        "distance_meters": 96.0,
+        "estimated_seconds": 68.6,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.367,
+            30.3565
+          ],
+          [
+            76.3695,
+            30.3582
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p055",
+        "from_node": "n_cs_block",
+        "to_node": "n_old_lib",
+        "distance_meters": 305.4,
+        "estimated_seconds": 218.1,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3678,
+            30.3556
+          ],
+          [
+            76.3675,
+            30.3548
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p056",
+        "from_node": "n_new_lib",
+        "to_node": "n_g_block",
+        "distance_meters": 93.5,
+        "estimated_seconds": 66.8,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.3678,
+            30.3556
+          ],
+          [
+            76.3698,
+            30.3558
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p057",
+        "from_node": "n_new_lib",
+        "to_node": "n_mech",
+        "distance_meters": 193.2,
+        "estimated_seconds": 138.0,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            76.367,
+            30.3565
+          ],
+          [
+            76.37,
+            30.3575
+          ]
+        ]
+      },
+      "properties": {
+        "pathway_key": "p058",
+        "from_node": "n_cs_block",
+        "to_node": "n_junc_east_ring",
+        "distance_meters": 308.6,
+        "estimated_seconds": 220.4,
+        "is_bidirectional": true,
+        "has_stairs": false,
+        "has_ramp": false,
+        "is_accessible": true,
+        "surface_type": "paved"
+      }
+    }
+  ]
+}

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusNav — Thapar University Smart Navigation</title>
+  <meta name="description" content="Interactive campus navigation and route optimization strictly within Thapar Institute of Engineering & Technology.">
+
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+  <!-- Google Fonts: Roboto & Material Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Design System CSS -->
+  <link rel="stylesheet" href="/css/design-tokens.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/map.css">
+</head>
+<body style="margin: 0; padding: 0; overflow: hidden;">
+
+  <div class="app-container">
+
+    <!-- 1. FULLSCREEN LEAFLET MAP CANVAS (Strictly inside Thapar boundary) -->
+    <div id="campus-map" class="map-container"></div>
+
+    <!-- 2. GOOGLE MAPS FLOATING DIRECTION CARD (Top-Left) -->
+    <div class="gmap-direction-card" id="direction-card">
+      
+      <!-- Brand & Mode Bar -->
+      <div class="gmap-card-header">
+        <a href="/" class="gmap-brand">
+          <div class="gmap-brand-logo">C</div>
+          <div>
+            <div class="gmap-brand-title">CampusNav</div>
+            <div class="gmap-brand-subtitle">Thapar Institute of Eng. & Tech.</div>
+          </div>
+        </a>
+        <div style="display: flex; align-items: center; gap: 4px;">
+          <select id="algorithm-select" class="select" style="padding: 2px 6px; font-size: 11px; height: 26px; border-radius: 4px; border-color: #E8EAED;">
+            <option value="astar">A* Search</option>
+            <option value="dijkstra">Dijkstra</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Travel Mode Tabs (Google Maps Style: Walk, Step-Free, Fastest, Emergency) -->
+      <div class="gmap-mode-bar">
+        <button class="gmap-mode-tab mode-pill active" data-mode="shortest" title="Shortest Pedestrian Walking Route">
+          <span class="gmap-mode-icon">🚶</span>
+          <span>Walk</span>
+        </button>
+        <button class="gmap-mode-tab mode-pill" data-mode="accessible" title="Wheelchair & Step-Free Accessible Route">
+          <span class="gmap-mode-icon">♿</span>
+          <span>Step-Free</span>
+        </button>
+        <button class="gmap-mode-tab mode-pill" data-mode="fastest" title="Fastest Route by Time">
+          <span class="gmap-mode-icon">⚡</span>
+          <span>Fastest</span>
+        </button>
+        <button class="gmap-mode-tab mode-pill" data-mode="emergency" title="Route to Nearest Medical or Security Facility">
+          <span class="gmap-mode-icon">🚨</span>
+          <span>Emergency</span>
+        </button>
+      </div>
+
+      <!-- Origin & Destination Inputs Box -->
+      <div class="gmap-inputs-box">
+        <div class="gmap-input-connectors">
+          <div class="gmap-dot-origin" title="Starting Point"></div>
+          <div class="gmap-connector-dots"></div>
+          <div class="gmap-dot-dest" title="Destination Point"></div>
+        </div>
+
+        <div class="gmap-input-fields">
+          <!-- Start Location Input -->
+          <div class="gmap-input-row">
+            <input type="text" id="start-location-input" class="gmap-text-input" placeholder="Choose starting point..." autocomplete="off">
+            <div id="start-dropdown" class="gmap-dropdown"></div>
+          </div>
+
+          <!-- Destination Location Input -->
+          <div class="gmap-input-row">
+            <input type="text" id="dest-location-input" class="gmap-text-input" placeholder="Where to? (e.g. CS Block, New Library, Hostel M)..." autocomplete="off">
+            <div id="dest-dropdown" class="gmap-dropdown"></div>
+          </div>
+        </div>
+
+        <!-- Swap Points Button -->
+        <button id="swap-locations-btn" class="gmap-swap-btn" title="Reverse start and destination">
+          ⇅
+        </button>
+      </div>
+
+      <!-- Quick Campus Destination Chips -->
+      <div class="gmap-chips-tray">
+        <button class="gmap-chip" onclick="window.searchController.selectLocation('dest', 'n_gate1', 'Gate 1 (Main Gate)')">
+          🚪 Gate 1 (Main)
+        </button>
+        <button class="gmap-chip" onclick="window.searchController.selectLocation('dest', 'n_gate3', 'Gate 3 (Western Gate)')">
+          🚪 Gate 3 (West)
+        </button>
+        <button class="gmap-chip" onclick="window.searchController.selectLocation('dest', 'n_gate4', 'Gate 4 (Polytechnic)')">
+          🚪 Gate 4 (North)
+        </button>
+        <button class="gmap-chip" onclick="window.searchController.selectLocation('dest', 'n_cs_block', 'CS Block')">
+          💻 CS Block
+        </button>
+        <button class="gmap-chip" onclick="window.searchController.selectLocation('dest', 'n_new_lib', 'New Central Library')">
+          📚 New Library
+        </button>
+        <button class="gmap-chip" onclick="window.searchController.selectLocation('dest', 'n_dispensary', 'Dispensary / Health Centre')">
+          🏥 Dispensary
+        </button>
+        <button class="gmap-chip" onclick="window.searchController.selectLocation('dest', 'n_cricket', 'Cricket Ground')">
+          🏏 Cricket Ground
+        </button>
+        <button class="gmap-chip" onclick="window.searchController.selectLocation('dest', 'n_track', 'Synthetic Track')">
+          ⚽ Football Track
+        </button>
+        <button class="gmap-chip" onclick="window.searchController.selectLocation('dest', 'n_nirvana', 'Nirvana Park & Lake')">
+          🌳 Nirvana Park
+        </button>
+        <button class="gmap-chip" onclick="window.searchController.selectLocation('dest', 'n_hm', 'Hostel M')">
+          🏠 Hostel M
+        </button>
+        <button class="gmap-chip" onclick="window.searchController.selectLocation('dest', 'n_hd', 'Hostel D')">
+          🏠 Hostel D
+        </button>
+      </div>
+
+      <!-- Route Details Panel (Google Maps Walking Result) -->
+      <div id="route-details-panel" class="gmap-route-panel">
+        
+        <div class="gmap-route-metrics">
+          <span id="summary-time" class="gmap-route-time">-- min</span>
+          <span id="summary-distance" class="gmap-route-dist">(-- m)</span>
+        </div>
+
+        <div id="summary-badges" style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;">
+          <!-- Dynamically populated badges -->
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="gmap-actions-row">
+          <button class="gmap-btn-start" onclick="window.Utils.showToast('Walking navigation active! Follow the blue path on map.', 'success')">
+            🚶 Start Walk
+          </button>
+          <button id="calc-alternative-btn" class="gmap-btn-alt" onclick="window.routingController.calculateAlternativeRoute()">
+            🔀 Detour
+          </button>
+          <button class="gmap-btn-alt" style="color: #D93025; border-color: #FCE8E6;" onclick="window.Utils.openModal('modal-report-issue')">
+            ⚠️ Report
+          </button>
+        </div>
+
+        <!-- Turn-by-Turn Walking Directions -->
+        <div>
+          <div style="font-size: 11px; font-weight: 700; color: #5F6368; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">
+            Step-by-Step Directions
+          </div>
+          <div id="route-steps-list" class="gmap-directions-list">
+            <!-- Steps dynamically rendered -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 3. TOP-RIGHT FLOATING STRIP -->
+    <div class="gmap-top-strip">
+      <button class="gmap-header-btn" onclick="window.Utils.openModal('modal-official-map')" title="View user uploaded road map graphic">
+        🗺️ Official Road Map
+      </button>
+      <a href="/admin" class="gmap-header-btn">
+        ⚙️ Admin
+      </a>
+      <a href="/auth" id="auth-nav-btn" class="gmap-header-btn" style="background: #1A73E8; color: #FFFFFF; border: none;">
+        Sign In
+      </a>
+    </div>
+
+    <!-- 4. CAMPUS STRICT BOUNDARY BADGE (Bottom-Left) -->
+    <div class="campus-lockdown-badge">
+      <span style="font-size: 14px;">🔒</span>
+      <span>Thapar University Campus Grounds Only</span>
+    </div>
+
+    <!-- 5. FLOATING MAP ACTION BUTTONS (Bottom-Right, Google Maps Style) -->
+    <div class="gmap-fab-stack">
+      <!-- GPS My Location -->
+      <button id="use-current-location-btn" class="gmap-fab-btn" title="Locate via device GPS">
+        ⌖
+      </button>
+      <!-- Recenter Campus View -->
+      <button class="gmap-fab-btn" title="Reset View to Thapar Campus" onclick="window.campusMap.resetView()">
+        🎯
+      </button>
+      <!-- Clear Active Route -->
+      <button class="gmap-fab-btn" title="Clear Route" onclick="window.campusMap.clearRoutes(); document.getElementById('route-details-panel').style.display='none';">
+        ✕
+      </button>
+      <!-- Zoom In / Zoom Out Group -->
+      <div class="gmap-zoom-group">
+        <button class="gmap-zoom-btn" title="Zoom In" onclick="window.campusMap.zoomIn()">
+          +
+        </button>
+        <button class="gmap-zoom-btn" title="Zoom Out" onclick="window.campusMap.zoomOut()">
+          −
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modal: View Official Campus Map (User's Uploaded Graphic) -->
+  <div class="modal-backdrop" id="modal-official-map">
+    <div class="modal" style="max-width: 720px; text-align: center;">
+      <div class="modal-header">
+        <h3 class="modal-title">Official Thapar Institute Campus Road Map</h3>
+        <button class="modal-close" onclick="window.Utils.closeModal('modal-official-map')">✕</button>
+      </div>
+      <div style="max-height: 70vh; overflow: auto; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 4px; background: white;">
+        <img src="/assets/thapar_campus_road_map.jpg" alt="Official Thapar Campus Road Map" style="max-width: 100%; height: auto; border-radius: var(--radius-sm); display: block; margin: 0 auto;">
+      </div>
+      <p style="font-size: var(--text-xs); color: var(--color-text-muted); margin-top: 10px; text-align: left;">
+        All gates (1, 2, 3, 4), hostels (A through M), academic departments, CS Block, libraries, and sports areas shown on this official layout are mathematically mapped into the CampusNav routing graph.
+      </p>
+    </div>
+  </div>
+
+  <!-- Modal: Report Pathway Blockage or Hazard -->
+  <div class="modal-backdrop" id="modal-report-issue">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Report Pathway Issue</h3>
+        <button class="modal-close" onclick="window.Utils.closeModal('modal-report-issue')">✕</button>
+      </div>
+      <form id="form-report-pathway">
+        <div class="form-group">
+          <label class="form-label" for="report-type">Issue Type</label>
+          <select id="report-type" class="select" required>
+            <option value="OBSTRUCTION">Pathway Blocked / Obstructed</option>
+            <option value="CONSTRUCTION">Ongoing Construction / Repairs</option>
+            <option value="DAMAGE">Damaged Pavement / Steps</option>
+            <option value="HAZARD">Safety or Lighting Hazard</option>
+            <option value="OTHER">Other Issue</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="report-description">Description & Location Details</label>
+          <textarea id="report-description" class="textarea" rows="3" placeholder="Explain the problem and where on campus it is located..." required></textarea>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: var(--space-2); margin-top: var(--space-4);">
+          <button type="button" class="btn btn-secondary" onclick="window.Utils.closeModal('modal-report-issue')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit Report</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Leaflet JS Library -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Application Logic Scripts -->
+  <script src="/js/api.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/map.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/routing.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Initialize map, search, and routing controllers
+      window.campusMap.init();
+      await window.searchController.init();
+      window.routingController.init();
+
+      // 2. Check user session
+      try {
+        const userRes = await window.api.getCurrentUser();
+        if (userRes.success && userRes.data) {
+          const authBtn = document.getElementById('auth-nav-btn');
+          if (authBtn) {
+            authBtn.textContent = userRes.data.first_name || 'My Account';
+            authBtn.href = userRes.data.role === 'admin' ? '/admin' : '/auth';
+          }
+        }
+      } catch (e) {
+        // Visitor mode
+      }
+
+      // 3. Handle Pathway Report Submission
+      const reportForm = document.getElementById('form-report-pathway');
+      if (reportForm) {
+        reportForm.addEventListener('submit', async e => {
+          e.preventDefault();
+          const type = document.getElementById('report-type').value;
+          const desc = document.getElementById('report-description').value.trim();
+
+          try {
+            const res = await window.api.reportPathway({
+              report_type: type,
+              description: desc
+            });
+            if (res.success) {
+              window.Utils.showToast('Thank you! Your report has been submitted to campus administrators.', 'success');
+              window.Utils.closeModal('modal-report-issue');
+              reportForm.reset();
+            }
+          } catch (err) {
+            window.Utils.showToast('Failed to submit report. Please try again.', 'error');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
