@@ -50,19 +50,22 @@ class CampusMap {
     // Initialize Leaflet map with STRICT campus boundary lockdown
     this.map = L.map(this.containerId, {
       zoomControl: false,
-      attributionControl: false,
-      maxBounds: this.thaparBounds,
+      attributionControl: true,
+      maxBounds: this.thaparBounds.pad(0.4), // a little slack so edge-of-campus routes can clear the directions card
       maxBoundsViscosity: 1.0, // 100% rigid wall — cannot drag outside Thapar University
       minZoom: 16.0,           // User cannot zoom out to see outside city/country
       maxZoom: 19.5
     }).fitBounds(this.thaparBounds);
 
-    // Clean Google Maps-style base map tiles (Voyager)
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    // OpenStreetMap base tiles (free, no API key needed; attribution is required by OSM)
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 20,
+      maxNativeZoom: 19,
       minZoom: 15,
-      bounds: this.thaparBounds
+      bounds: this.thaparBounds,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
     }).addTo(this.map);
+    this.map.attributionControl.setPrefix(false);
 
     // Layer groups in visual z-index order
     this.outerMaskLayer = L.layerGroup().addTo(this.map);
@@ -71,6 +74,7 @@ class CampusMap {
     this.markersLayer = L.layerGroup().addTo(this.map);
     this.alternativeRouteLayer = L.layerGroup().addTo(this.map);
     this.routeLayer = L.layerGroup().addTo(this.map);
+    this.map.on('zoomend', () => this.declutterLabels());
 
     // 1. Mask out everything outside Thapar University boundary
     this.renderOutsideMask();
@@ -188,14 +192,77 @@ class CampusMap {
       if (!res.success || !res.data) return;
 
       this.markersLayer.clearLayers();
+      this.placeMarkers = [];
 
       res.data.forEach(bldg => {
         const marker = this.createBuildingMarker(bldg);
         marker.addTo(this.markersLayer);
+        this.placeMarkers.push({ marker, priority: this.labelPriority(bldg) });
       });
+      // most important labels first, so they win when two would overlap
+      this.placeMarkers.sort((a, b) => a.priority - b.priority);
+      this.declutterLabels();
     } catch (err) {
       console.error('Failed to load campus buildings onto map:', err);
     }
+  }
+
+  labelPriority(bldg) {
+    if (bldg.short_code && bldg.short_code.startsWith('GATE')) return 0;
+    const order = { ACADEMIC: 1, LIBRARY: 1, MEDICAL: 2, SPORTS: 3, HOSTEL: 4, PARKING: 5, OTHER: 5 };
+    return order[bldg.category] ?? 6;
+  }
+
+  /**
+   * Hides the text of labels that would overlap a more important one (the icon stays,
+   * and the name appears on hover). Runs again after every zoom, so zooming in reveals more names.
+   */
+  declutterLabels() {
+    if (!this.placeMarkers) return;
+    const shown = [];
+    const overlaps = (a, b) => !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom);
+    this.placeMarkers.forEach(({ marker }) => {
+      const el = marker.getElement() && marker.getElement().querySelector('.gmap-place-marker');
+      if (!el) return;
+      el.classList.remove('label-hidden');
+      const box = el.getBoundingClientRect();
+      if (shown.some(other => overlaps(box, other))) {
+        el.classList.add('label-hidden');
+        shown.push(el.getBoundingClientRect());
+      } else {
+        shown.push(box);
+      }
+    });
+  }
+
+  /** Thick highlight over the part of the route for the current walking step. */
+  highlightSegment(latlngs) {
+    this.clearHighlight();
+    if (!latlngs || latlngs.length < 2) return;
+    this.stepHighlight = L.polyline(latlngs, {
+      color: '#0B57D0', weight: 11, opacity: 0.9, lineCap: 'round', lineJoin: 'round'
+    }).addTo(this.routeLayer);
+    this.map.flyToBounds(this.stepHighlight.getBounds(), {
+      paddingTopLeft: [this.cardPadding().left, 90], paddingBottomRight: [90, this.cardPadding().bottom],
+      maxZoom: 18.5, duration: 0.6
+    });
+  }
+
+  clearHighlight() {
+    if (this.stepHighlight) {
+      this.routeLayer.removeLayer(this.stepHighlight);
+      this.stepHighlight = null;
+    }
+  }
+
+  /** Space taken by the directions card, so routes are never drawn underneath it. */
+  cardPadding() {
+    const card = document.getElementById('direction-card');
+    const narrow = window.innerWidth < 768;
+    return {
+      left: card && !narrow ? card.offsetWidth + 40 : 40,
+      bottom: card && narrow ? Math.min(card.offsetHeight, window.innerHeight * 0.5) + 20 : 40
+    };
   }
 
   createBuildingMarker(bldg) {
@@ -222,7 +289,7 @@ class CampusMap {
     const html = `
       <div class="gmap-place-marker" title="${bldg.name}">
         <span class="gmap-place-icon ${iconClass}">${iconSymbol}</span>
-        <span>${bldg.name.split('(')[0].trim()}</span>
+        <span class="gmap-place-label">${bldg.name.split('(')[0].trim()}</span>
       </div>
     `;
 
@@ -235,7 +302,9 @@ class CampusMap {
 
     const marker = L.marker([bldg.latitude, bldg.longitude], { icon: customIcon });
 
-    const entranceKey = (bldg.entrances && bldg.entrances.length > 0) ? bldg.entrances[0].node_key : `n_${bldg.id}`;
+    // Every building gets a routable node_key from the server (entrance, landmark or nearest walkway)
+    const entranceKey = bldg.node_key || ((bldg.entrances && bldg.entrances.length > 0) ? bldg.entrances[0].node_key : null);
+    if (!entranceKey) return marker;
 
     const popupContent = `
       <div class="gmap-popup-card">
@@ -350,8 +419,27 @@ class CampusMap {
     // Set starting and ending teardrop pins
     if (!isAlternative && latlngs.length >= 2) {
       this.setRouteEndpoints(latlngs[0], latlngs[latlngs.length - 1]);
-      this.map.fitBounds(polyline.getBounds(), { padding: [100, 100], maxZoom: 18.5 });
+      this.fitRoute(polyline.getBounds());
+    } else if (isAlternative && this.routeLayer.getLayers().length) {
+      // show the main route and the detour together
+      const both = polyline.getBounds();
+      this.routeLayer.eachLayer(l => { if (l.getBounds) both.extend(l.getBounds()); });
+      this.fitRoute(both);
     }
+  }
+
+  /** Zooms to a route while keeping it clear of the directions card. */
+  fitRoute(bounds) {
+    const pad = this.cardPadding();
+    this.map.fitBounds(bounds, {
+      paddingTopLeft: [pad.left, 70],
+      paddingBottomRight: [80, pad.bottom],
+      maxZoom: 18.5
+    });
+  }
+
+  clearAlternative() {
+    if (this.alternativeRouteLayer) this.alternativeRouteLayer.clearLayers();
   }
 
   setRouteEndpoints(startLatLng, destLatLng) {
@@ -378,6 +466,7 @@ class CampusMap {
   }
 
   clearRoutes() {
+    this.stepHighlight = null;
     if (this.routeLayer) this.routeLayer.clearLayers();
     if (this.alternativeRouteLayer) this.alternativeRouteLayer.clearLayers();
     this.startMarker = null;
@@ -399,6 +488,17 @@ class CampusMap {
     this.userLocationMarker = L.marker([lat, lon], { icon: gpsIcon }).addTo(this.map);
     this.userLocationMarker.bindPopup('<b>Your Current Location</b>').openPopup();
     this.map.setView([lat, lon], 17.5);
+  }
+
+  /** Live position marker used during a guided walk (no popup, no re-centring). */
+  showGpsDot(lat, lon) {
+    if (!this.gpsDot) {
+      this.gpsDot = L.marker([lat, lon], {
+        icon: L.divIcon({ html: '<div class="gmap-user-gps"></div>', className: '', iconSize: [16, 16], iconAnchor: [8, 8] })
+      }).addTo(this.map);
+    } else {
+      this.gpsDot.setLatLng([lat, lon]);
+    }
   }
 
   resetView() {

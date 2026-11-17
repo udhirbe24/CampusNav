@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="style.css"><svg width="1000" height="760" viewBox="0 0 1000 760" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#4a5a55"/></marker></defs>
+<g font-size="13.5">
+<circle cx="500" cy="26" r="12" fill="#173F35"/>
+<rect class="box" x="360" y="56" width="280" height="44" rx="22"/><text x="500" y="83" text-anchor="middle">User picks start, destination, mode</text>
+<rect class="box" x="360" y="124" width="280" height="44" rx="8"/><text x="500" y="151" text-anchor="middle">POST /api/routes/calculate</text>
+<polygon class="boxa" points="500,192 640,232 500,272 360,232"/><text x="500" y="228" text-anchor="middle">Both points exist</text><text x="500" y="246" text-anchor="middle">in the graph?</text>
+<rect class="box" x="720" y="210" width="230" height="44" rx="8"/><text x="835" y="237" text-anchor="middle">404 “Unknown destination”</text>
+<rect class="box" x="360" y="296" width="280" height="44" rx="8"/><text x="500" y="323" text-anchor="middle">GraphService.graph() (cached)</text>
+<polygon class="boxa" points="500,364 660,410 500,456 340,410"/><text x="500" y="404" text-anchor="middle">How many</text><text x="500" y="422" text-anchor="middle">destinations?</text>
+<rect class="boxd" x="40" y="388" width="220" height="44" rx="8"/><text x="150" y="415" text-anchor="middle" style="fill:#fff">Dijkstra (nearest of many)</text>
+<polygon class="boxa" points="500,480 660,526 500,572 340,526"/><text x="500" y="520" text-anchor="middle">Heuristic</text><text x="500" y="538" text-anchor="middle">admissible?</text>
+<rect class="boxd" x="40" y="504" width="220" height="44" rx="8"/><text x="150" y="531" text-anchor="middle" style="fill:#fff">Dijkstra (safe fallback)</text>
+<rect class="boxd" x="740" y="504" width="220" height="44" rx="8"/><text x="850" y="531" text-anchor="middle" style="fill:#fff">A* search</text>
+<rect class="box" x="330" y="600" width="340" height="44" rx="8"/><text x="500" y="627" text-anchor="middle">Build steps, GeoJSON, summary + reason</text>
+<rect class="box" x="330" y="664" width="340" height="44" rx="8"/><text x="500" y="691" text-anchor="middle">Save history · return JSON · draw on map</text>
+<circle cx="500" cy="738" r="12" fill="#fff" stroke="#173F35" stroke-width="2"/><circle cx="500" cy="738" r="7" fill="#173F35"/>
+</g>
+<g class="ln">
+<path d="M500 38 L500 54" marker-end="url(#a)"/><path d="M500 100 L500 122" marker-end="url(#a)"/><path d="M500 168 L500 190" marker-end="url(#a)"/>
+<path d="M640 232 L718 232" marker-end="url(#a)"/><path d="M500 272 L500 294" marker-end="url(#a)"/><path d="M500 340 L500 362" marker-end="url(#a)"/>
+<path d="M340 410 L262 410" marker-end="url(#a)"/><path d="M500 456 L500 478" marker-end="url(#a)"/>
+<path d="M340 526 L262 526" marker-end="url(#a)"/><path d="M660 526 L738 526" marker-end="url(#a)"/>
+<path d="M40 410 L18 410 L18 622 L328 622" marker-end="url(#a)"/><path d="M150 548 L150 622"/><path d="M850 548 L850 622 L672 622" marker-end="url(#a)"/>
+<path d="M500 644 L500 662" marker-end="url(#a)"/><path d="M500 708 L500 724" marker-end="url(#a)"/>
+</g>
+<g class="s"><text x="660" y="224">no</text><text x="508" y="288">yes</text><text x="280" y="402">several</text><text x="508" y="472">one</text><text x="290" y="518">no</text><text x="680" y="518">yes</text></g>
+</svg>

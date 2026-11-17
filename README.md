@@ -1,123 +1,136 @@
 # CampusNav — Smart Campus Navigation & Route Optimization System
 
-> **Deployment Target:** Thapar Institute of Engineering and Technology (TIET), Patiala, Punjab, India  
-> **Engineering Discipline:** Software Architecture, Geographic Information Systems (GIS), Graph Algorithms, and Full-Stack Engineering.
+> **Deployment Target:** Thapar Institute of Engineering and Technology (TIET), Patiala, Punjab, India
+> **Built with:** Java 21 · Spring Boot 3 · Spring Data JPA · H2 · Leaflet.js
 
 ---
 
 ## 1. Executive Summary
 
-**CampusNav** is an intelligent university campus navigation and spatial routing web application. It transitions campus transit from static PDF layout diagrams to an interactive, graph-backed routing platform designed for university students, faculty members, campus administration, and visitors.
+**CampusNav** is a campus navigation and route-optimisation web application. It replaces static PDF campus maps with an interactive, graph-backed routing platform for students, faculty, administrators and visitors.
 
-The system utilizes mathematical graph search algorithms (**Dijkstra's Algorithm** and **A\* Search with Haversine distance heuristics**) to calculate real-world walking paths, avoid dynamic pathway closures (e.g., ongoing construction or events), enforce strict wheelchair accessibility (step-free pathways), offer alternative detours, and direct users to emergency medical and security facilities.
+The routing engine models the campus walkways as a weighted graph and uses **A\* Search** (with a Haversine straight-line heuristic) and **Dijkstra's Algorithm**, choosing between them automatically. It finds the shortest, fastest or wheelchair-accessible (step-free) path, avoids walkways that admins have closed, suggests detours, and guides users to the nearest emergency facility.
+
+**Highlights:** shortest / fastest / step-free / emergency routing · automatic A\* or Dijkstra choice (shown with its reason) · detours with an extra-distance comparison · guided step-by-step walk (follows GPS on campus) · shareable route links (`/app?from=...&to=...&mode=...`) · directions that name landmarks passed · admin closures that reroute instantly · mobile bottom-sheet layout.
+
+Project report and slides: [`docs/CampusNav_Report.docx`](docs/CampusNav_Report.docx), [`docs/CampusNav_Presentation.pptx`](docs/CampusNav_Presentation.pptx).
 
 ---
 
-## 2. System Architecture
+## 2. Quick Start
 
-CampusNav is engineered following clean separation of concerns:
+### Prerequisites
+- **Java 17 or newer** (Java 21 recommended). Maven is *not* required — the included Maven Wrapper downloads it automatically.
+  - macOS: `brew install openjdk@21`
+  - Windows / Linux: install Temurin 21 from <https://adoptium.net>
+
+### Run it
+| OS | Command (from the project folder) |
+|---|---|
+| macOS / Linux | `./start.sh` |
+| Windows (Command Prompt) | `start.bat` |
+| Windows (PowerShell) | `.\start.ps1` |
+
+Or manually:
+```bash
+cd backend
+./mvnw spring-boot:run        # Windows: mvnw.cmd spring-boot:run
+```
+
+The first start downloads dependencies (a minute or two) and loads the Thapar campus map into the database automatically — there is no separate database setup step.
+
+Then open:
+- **Navigation map:** <http://localhost:8088/app>
+- **Landing page:** <http://localhost:8088/>
+- **Sign in / register:** <http://localhost:8088/auth>
+- **Admin portal:** <http://localhost:8088/admin>
+
+**Default admin login:** `admin@thapar.edu` / `AdminPassword123!` (change it with the `ADMIN_PASSWORD` environment variable before the first start).
+
+To use another port: `PORT=9090 ./start.sh` (macOS/Linux) or `set PORT=9090` then `start.bat` (Windows).
+
+### Build a standalone jar
+```bash
+cd backend
+./mvnw package
+java -jar target/campusnav.jar
+```
+The jar contains the frontend too, so it runs anywhere Java is installed.
+
+---
+
+## 3. System Architecture
 
 ```
 CampusNav/
-├── backend/
-│   ├── app/
-│   │   ├── algorithms/             # Graph data structures & routing algorithms
-│   │   │   ├── graph.py            # Adjacency list & node/edge representations
-│   │   │   ├── dijkstra.py         # Priority queue Dijkstra implementation
-│   │   │   ├── astar.py            # Heuristic-guided A* search
-│   │   │   └── route_optimizer.py  # Multi-criteria routing & step generation
-│   │   ├── models/                 # Normalized SQLAlchemy relational entities
-│   │   │   ├── user.py             # User accounts & role-based permissions
-│   │   │   ├── location.py         # Buildings, rooms, & navigation nodes
-│   │   │   ├── pathway.py          # Walkway edges, width, stairs, ramps
-│   │   │   ├── emergency.py        # Verified emergency facilities
-│   │   │   └── report.py           # User hazard reports & routing logs
-│   │   ├── routes/                 # RESTful API blueprints
-│   │   │   ├── auth_routes.py      # Registration, login, session tokens
-│   │   │   ├── locations_routes.py # Building search & node spatial metadata
-│   │   │   ├── navigation_routes.py# Route calculations, alternative paths
-│   │   │   ├── pathways_routes.py  # Walkway status & closure management
-│   │   │   └── admin_routes.py     # Administrative analytics & controls
-│   │   ├── services/               # Business logic & graph caching layer
-│   │   │   ├── auth_service.py
-│   │   │   ├── navigation_service.py
-│   │   │   └── campus_data_service.py
-│   │   └── utils/                  # Geodesic math, validators, responses
-│   │       ├── geo_utils.py        # Haversine distance, azimuth bearings
-│   │       ├── validators.py       # Input validation & password checks
-│   │       └── response_helpers.py # Standardized JSON envelope format
-│   ├── data/                       # Spatial dataset for Thapar University
-│   │   ├── thapar_locations.json   # 25 verified campus buildings
-│   │   ├── thapar_nodes.geojson    # 50 navigation nodes
-│   │   └── thapar_pathways.geojson # 68 pedestrian walkway edges
-│   ├── tests/                      # Automated test suite (Pytest)
-│   │   ├── test_algorithms.py      # Dijkstra & A* verification tests
-│   │   ├── test_auth.py            # Authentication & session tests
-│   │   ├── test_api.py             # Full API endpoint integration tests
-│   │   └── test_models.py          # Database integrity & hashing tests
-│   ├── config.py                   # Environment configurations
-│   ├── init_db.py                  # Database bootstrap and seed script
-│   └── run.py                      # Application server entry point
-├── frontend/                       # Vanilla ES6+, HTML5, CSS3, Leaflet.js
-│   ├── index.html                  # University landing page & feature overview
-│   ├── app.html                    # Central interactive navigation dashboard
-│   ├── auth.html                   # Student, faculty, & guest sign-in
-│   ├── admin.html                  # Admin operations & Chart.js analytics
-│   ├── css/                        # Design system & tokens
-│   │   ├── design-tokens.css       # Palette tokens, typography, elevation
-│   │   ├── components.css          # Buttons, inputs, pills, cards, modal
-│   │   ├── layout.css              # Responsive layout & mobile bottom sheet
-│   │   ├── map.css                 # Custom Leaflet markers & popups
-│   │   ├── auth.css                # Authentication forms
-│   │   └── admin.css               # Admin tables, KPIs, & chart containers
-│   └── js/                         # Modular frontend controllers
-│       ├── api.js                  # Asynchronous REST API client
-│       ├── map.js                  # Leaflet map manager & route rendering
-│       ├── routing.js              # Mode switcher & turn-by-turn steps
-│       ├── search.js               # Autocomplete & quick destination picker
-│       ├── auth.js                 # Authentication controller
-│       ├── admin.js                # Analytics charts & closure controls
-│       └── utils.js                # Toast notifications & formatters
-├── requirements.txt                # Python backend dependencies
-├── .env.example                    # Environment variable template
-└── README.md                       # Comprehensive technical documentation
+├── backend/                                  # Java 21 + Spring Boot (Maven project)
+│   ├── pom.xml
+│   ├── mvnw, mvnw.cmd                        # Maven Wrapper (no Maven install needed)
+│   └── src/
+│       ├── main/java/edu/thapar/campusnav/
+│       │   ├── CampusNavApplication.java     # Entry point
+│       │   ├── algorithm/                    # Pure Java graph + routing (no Spring)
+│       │   │   ├── CampusGraph.java          # Adjacency-list graph of walkways
+│       │   │   ├── DijkstraPathFinder.java   # Dijkstra with a binary-heap priority queue
+│       │   │   ├── AStarPathFinder.java      # A* with an admissible Haversine heuristic
+│       │   │   ├── RouteOptimizer.java       # Auto algorithm choice, modes, detours, directions
+│       │   │   ├── SearchOptions.java        # Distance/time weighting, step-free filter
+│       │   │   ├── PathResult.java, RouteResult.java, Algorithm.java
+│       │   │   └── GeoUtils.java             # Haversine distance, bearings, formatting
+│       │   ├── model/                        # JPA entities (User, Building, NavigationNode,
+│       │   │                                 #   Pathway, PathwayClosure, EmergencyFacility, ...)
+│       │   ├── repository/                   # Spring Data JPA repositories
+│       │   ├── service/
+│       │   │   ├── GraphService.java         # Builds + caches the graph from the database
+│       │   │   ├── NavigationService.java    # Routes, detours, emergency routing, history
+│       │   │   ├── CampusDataService.java    # Buildings, nodes, pathways, admin analytics
+│       │   │   ├── PathwayService.java       # Close / reopen walkways
+│       │   │   ├── AuthService.java          # Registration, login, BCrypt hashing
+│       │   │   └── DataSeeder.java           # Loads the campus map on first start
+│       │   ├── web/                          # REST controllers, session auth, error handling
+│       │   └── config/WebConfig.java         # Serves the frontend
+│       ├── main/resources/
+│       │   ├── application.properties
+│       │   └── data/                         # Thapar campus dataset
+│       │       ├── thapar_locations.json     # 35 buildings and places
+│       │       ├── thapar_nodes.geojson      # 43 walkway nodes
+│       │       └── thapar_pathways.geojson   # 58 walkway edges
+│       └── test/java/...                     # JUnit 5 tests
+├── frontend/                                 # HTML, CSS, vanilla JavaScript, Leaflet.js
+│   ├── index.html, app.html, auth.html, admin.html
+│   ├── css/
+│   └── js/ (api.js, map.js, routing.js, search.js, auth.js, admin.js, utils.js)
+├── start.sh, start.bat, start.ps1            # One-click starters
+└── README.md
 ```
 
+The backend serves the frontend from the same address, so there is a single server to run.
+
 ---
 
-## 3. Technology Stack
-
-### Frontend
-- **HTML5 & CSS3:** Mobile-first layout with native CSS custom properties.
-- **Vanilla JavaScript (ES6+):** Zero-framework, high-performance modular JavaScript.
-- **Leaflet.js (v1.9.4):** Interactive mapping engine with custom SVG markers and geo-polylines.
-- **OpenStreetMap / CARTO:** Clean base tile rendering.
-- **Chart.js (v4.4.1):** Live database metrics visualization on the admin dashboard.
+## 4. Technology Stack
 
 ### Backend
-- **Python 3.10+ / 3.14:** Core runtime.
-- **Flask (v3.1):** Lightweight, modular WSGI application with Blueprints.
-- **Flask-SQLAlchemy (v3.1):** ORM layer supporting SQLite (development) and PostgreSQL (production).
-- **Flask-Login:** Session authentication and role-based access control.
-- **Flask-CORS:** Cross-Origin Resource Sharing security.
-- **Werkzeug:** Cryptographic password hashing (`scrypt`).
+- **Java 21** and **Spring Boot 3.5** (Spring Web MVC)
+- **Spring Data JPA / Hibernate** with an embedded **H2** database (a file in `backend/campusnav-data/`)
+- **BCrypt** password hashing (`spring-security-crypto`) and HTTP-session login
+- **JUnit 5**, **MockMvc** and **AssertJ** for tests
 
-### Spatial & Graph Algorithms
-- **Dijkstra's Algorithm:** Shortest/fastest path with min-heap priority queue ($O((V + E) \log V)$).
-- **A\* Search Algorithm:** Informed pathfinding using straight-line Haversine distance heuristic.
-- **Haversine Formula:** Great-circle geodesic distance calculation on the WGS 84 ellipsoid.
-- **GeoJSON:** Standards-compliant spatial vector data exchange.
+### Frontend
+- HTML5, CSS3 and vanilla JavaScript (ES6+), no framework
+- **Leaflet.js 1.9.4** with **OpenStreetMap** tiles (no API key needed)
+- **Chart.js** on the admin dashboard
 
 ---
 
-## 4. Algorithmic Formulation
+## 5. Algorithmic Formulation
 
-### 4.1 Dijkstra's Shortest Path
+### 5.1 Dijkstra's Shortest Path
 Campus pathways are modeled as a weighted directed/undirected graph $G = (V, E)$, where $V$ represents pathway intersections, building entrances, and emergency points, and $E$ represents walkable paths.
 - **Distance Weighting:** $w(u, v) = \text{distance in meters}$.
 - **Time Weighting:** $w(u, v) = \frac{\text{distance in meters}}{\text{walking speed (1.4 m/s)}}$.
 
-### 4.2 A\* Search Algorithm
+### 5.2 A\* Search Algorithm
 A\* evaluates nodes by combining the exact path cost $g(n)$ from the start node and an admissible heuristic estimate $h(n)$ to the destination:
 $$f(n) = g(n) + h(n)$$
 
@@ -129,16 +142,27 @@ where $R = 6,371,000 \text{ meters}$.
 **Admissibility & Consistency:**
 Because Euclidean and geodesic straight-line distance is always less than or equal to the actual walking distance along physical pedestrian pathways ($h(n) \le h^*(n)$), the heuristic is admissible and monotonic. This guarantees that A\* always finds the optimal path while expanding significantly fewer nodes than standard Dijkstra.
 
-### 4.3 Multi-Criteria Optimization Modes
+### 5.3 Automatic Algorithm Selection
+Users never pick an algorithm — `RouteOptimizer.chooseAlgorithm()` picks the best one for each question and the app shows which one it used and why:
+
+| Question | Algorithm chosen | Why |
+|---|---|---|
+| One start → one destination | **A\*** | Same optimal answer as Dijkstra, but the straight-line heuristic pulls the search toward the destination, so it explores fewer points. |
+| One start → nearest of several places (Emergency) | **Dijkstra** | Expands outward in order of distance, so a single search stops at whichever facility is closest. A\*'s heuristic needs a single target. |
+| Any walkway recorded shorter than the straight line between its ends | **Dijkstra** | The A\* heuristic could overestimate, so optimality would no longer be guaranteed. |
+
+For time-based routing the A\* heuristic is the straight-line distance divided by the fastest walking speed found on any walkway, which keeps it admissible.
+
+### 5.4 Multi-Criteria Optimization Modes
 1. **Shortest Distance:** Minimizes cumulative physical distance in meters.
-2. **Fastest Route:** Minimizes estimated travel time based on surface type and grade.
+2. **Fastest Route:** Minimizes walking time plus a 5-second delay per junction passed, so it prefers routes with fewer crossings when lengths are close.
 3. **Wheelchair Accessible (Step-Free):** Evaluates edges with `is_accessible = True` and strictly prunes edges with `has_stairs = True`.
-4. **Alternative Route:** Penalizes or excludes edges traversed by the primary route to generate a distinct secondary path.
+4. **Alternative Route (Detour):** Makes the primary route's walkways 3× as expensive and searches again, producing a genuinely different path.
 5. **Emergency Route:** Calculates the optimal route to the closest active medical center, security office, or assembly point.
 
 ---
 
-## 5. Visual Identity & UI/UX
+## 6. Visual Identity & UI/UX
 
 CampusNav is styled to reflect a calm, authoritative university navigation product:
 - **Primary Color:** Deep Forest Green (`#173F35`)
@@ -151,65 +175,23 @@ CampusNav is styled to reflect a calm, authoritative university navigation produ
 
 ---
 
-## 6. Installation & Local Setup
+## 7. Running the Tests
 
-### Prerequisites
-- Python 3.10 or higher
-- Git
-
-### Step 1: Clone or Open the Project
 ```bash
-cd c:\Users\udayd\OneDrive\Desktop\CampusNav
+cd backend
+./mvnw test
 ```
 
-### Step 2: Install Python Dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### Step 3: Initialize Environment Variables
-Copy `.env.example` to `.env`:
-```bash
-cp .env.example .env
-```
-
-### Step 4: Initialize the Database & Seed Campus Data
-Run the database migration and seed script. This populates 25 Thapar University buildings, 50 navigation nodes, 68 connected pathways, 4 emergency facilities, and seeds the initial administrator account:
-```bash
-python backend/init_db.py
-```
-
-### Step 5: Start the Application Server
-```bash
-python backend/run.py
-```
-Open your browser and navigate to:
-- **Landing Page:** [http://localhost:5000/](http://localhost:5000/)
-- **Navigation Map:** [http://localhost:5000/app](http://localhost:5000/app)
-- **Sign In:** [http://localhost:5000/auth](http://localhost:5000/auth)
-- **Admin Portal:** [http://localhost:5000/admin](http://localhost:5000/admin)
-
-**Default Admin Credentials:**
-- **Email:** `admin@thapar.edu`
-- **Password:** `AdminPassword123!`
-
----
-
-## 7. Running the Automated Test Suite
-
-The test suite validates algorithms, data models, role authorization, and REST endpoints:
-```bash
-python -m pytest backend/tests -v
-```
-All 25 automated unit and integration tests pass with 100% compliance:
-- 9 Algorithm Tests (Dijkstra optimality, A\* admissibility, blocked pathway rerouting, stairs avoidance, alternative routes, emergency routing, real Thapar graph connectivity).
-- 4 Authentication Tests (Registration, duplicate detection, password strength, login/logout).
-- 9 API Integration Tests (Locations, search, Dijkstra calculation, A\* calculation, emergency routing, user hazard reports, admin access control).
-- 3 Database Model Tests (Hashing, serialization).
+28 JUnit tests cover:
+- **Algorithms (16):** Fastest mode's junction delay, landmark names in merged directions, Dijkstra optimality, A\* matches Dijkstra on every pair, A\* explores no more nodes than Dijkstra, step-free routes avoid stairs, closed walkways are avoided, unreachable destinations, automatic algorithm choice (including the fallback when the heuristic could overestimate), nearest-facility search, detours, turn instructions, Haversine accuracy.
+- **API (12), on the real Thapar map:** every building is routable, every pair of points is reachable in every mode with A\* and Dijkstra agreeing, CS Block → Cricket Ground (regression), emergency routing, detours, closing and reopening a walkway, registration rules, login, admin-only access, hazard reports, page serving.
 
 ---
 
 ## 8. REST API Reference
+
+All responses use the envelope `{"success": true|false, "message": "...", "data": ...}`. Route requests send only `from_node`, `to_node` and `mode` (`shortest`, `fastest` or `accessible`); the server chooses the algorithm and returns it in `data.summary.algorithm` along with `algorithm_reason` and `nodes_explored`.
+
 
 | Method | Endpoint | Description | Auth Required |
 |---|---|---|---|
@@ -236,14 +218,14 @@ All 25 automated unit and integration tests pass with 100% compliance:
 
 ---
 
-## 9. Security & Production Considerations
+## 9. Security Notes
 
-- **Password Hashing:** Passwords are never stored in plaintext. Werkzeug `scrypt` hashing is enforced.
-- **CSRF & Session Security:** Session cookies are set with HTTP-only and SameSite flags.
-- **SQL Injection Prevention:** All queries use parameterized SQLAlchemy ORM statements.
-- **Graph Invalidation:** Whenever an administrator marks a pathway as blocked or reopened, `NavigationService.invalidate_graph()` triggers an immediate memory cache flush, ensuring subsequent path calculations reflect real-world physical changes.
-- **Production Migration:** To migrate from SQLite to PostgreSQL, update the `DATABASE_URL` in `.env` to:  
-  `postgresql://user:password@host:5432/campusnav`
+- Passwords are stored as **BCrypt** hashes, never in plain text.
+- Logging in issues a new session id (prevents session fixation); session cookies are HTTP-only and SameSite=Lax.
+- Nobody can make themselves an admin by registering — only an existing admin can change roles, and an admin cannot remove their own admin role.
+- All database access goes through JPA parameterised queries (no SQL injection).
+- Closing or reopening a walkway immediately rebuilds the cached routing graph, so the next route reflects the change.
+- The sign-in page's demo **Auto-Fill** button shows the default admin password. Remove it and set `ADMIN_PASSWORD` before deploying anywhere public.
 
 ---
 

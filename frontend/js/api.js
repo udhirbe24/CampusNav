@@ -92,20 +92,20 @@ class ApiClient {
   }
 
   // --- Navigation & Routing Endpoints ---
-  async calculateRoute({ fromNode, toNode, mode = 'shortest', algorithm = 'astar', accessibleOnly = false }) {
+  // The server picks the best algorithm (A* or Dijkstra) automatically.
+  async calculateRoute({ fromNode, toNode, mode = 'shortest', accessibleOnly = false }) {
     return this.request('/routes/calculate', {
       method: 'POST',
       body: {
         from_node: fromNode,
         to_node: toNode,
         mode,
-        algorithm,
         accessible_only: accessibleOnly
       }
     });
   }
 
-  async getAlternativeRoute({ fromNode, toNode, primaryPathNodes, mode = 'shortest', algorithm = 'astar' }) {
+  async getAlternativeRoute({ fromNode, toNode, primaryPathNodes, mode = 'shortest', accessibleOnly = false }) {
     return this.request('/routes/alternative', {
       method: 'POST',
       body: {
@@ -113,18 +113,17 @@ class ApiClient {
         to_node: toNode,
         primary_path_nodes: primaryPathNodes,
         mode,
-        algorithm
+        accessible_only: accessibleOnly
       }
     });
   }
 
-  async getEmergencyRoute({ fromNode, facilityType = null, algorithm = 'astar' }) {
+  async getEmergencyRoute({ fromNode, facilityType = null }) {
     return this.request('/routes/emergency', {
       method: 'POST',
       body: {
         from_node: fromNode,
-        facility_type: facilityType,
-        algorithm
+        facility_type: facilityType
       }
     });
   }

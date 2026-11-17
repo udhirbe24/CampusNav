@@ -203,7 +203,7 @@ class AdminController {
         return `
           <tr>
             <td><strong>#${p.id}</strong></td>
-            <td>${p.from_node_key || `Node ${p.from_node_id}`} &rarr; ${p.to_node_key || `Node ${p.to_node_id}`}</td>
+            <td>${p.from_name || p.from_node_key || `Node ${p.from_node_id}`} &rarr; ${p.to_name || p.to_node_key || `Node ${p.to_node_id}`}</td>
             <td>${Math.round(p.distance_meters)} m</td>
             <td>${p.has_stairs ? '⚠️ Yes (Stairs)' : '♿ Yes (Ramp/Flat)'}</td>
             <td>${statusBadge}</td>

@@ -72,11 +72,23 @@ class SearchController {
       return;
     }
 
-    const filtered = this.allBuildings.filter(b => 
-      b.name.toLowerCase().includes(term) ||
-      b.short_code.toLowerCase().includes(term) ||
-      (b.category && b.category.toLowerCase().includes(term))
-    );
+    // Rank matches: name starts with the term > short code > name contains it > category
+    const rank = b => {
+      const name = b.name.toLowerCase();
+      const mainName = name.split('(')[0].trim();
+      if (mainName.startsWith(term)) return 0;
+      if ((b.short_code || '').toLowerCase() === term) return 1;
+      if (mainName.includes(term)) return 2;
+      if (name.includes(term) || (b.short_code || '').toLowerCase().includes(term)) return 3;
+      if (b.category && b.category.toLowerCase().includes(term)) return 4;
+      return -1;
+    };
+
+    const filtered = this.allBuildings
+      .map(b => ({ b, r: rank(b) }))
+      .filter(x => x.r >= 0)
+      .sort((x, y) => x.r - y.r || x.b.name.localeCompare(y.b.name))
+      .map(x => x.b);
 
     this.showDropdown(dropdownId, filtered, type);
   }
@@ -91,8 +103,8 @@ class SearchController {
       return;
     }
 
-    dropdown.innerHTML = items.map(b => {
-      const entrance = (b.entrances && b.entrances.length > 0) ? b.entrances[0].node_key : `n_${b.id}`;
+    dropdown.innerHTML = items.filter(b => b.node_key).map(b => {
+      const entrance = b.node_key;
       let icon = '🏛️';
       if (b.short_code && b.short_code.startsWith('GATE')) icon = '🚪';
       else if (b.category === 'HOSTEL') icon = '🏠';
@@ -127,6 +139,12 @@ class SearchController {
       const input = document.getElementById('dest-location-input');
       if (input) input.value = name;
       document.getElementById('dest-dropdown')?.classList.remove('active');
+    }
+
+    // In Emergency mode only the starting point matters
+    if (window.routingController.currentMode === 'emergency' && this.startNodeKey) {
+      window.routingController.triggerEmergencyRouting();
+      return;
     }
 
     // Auto calculate if both start and destination are selected

@@ -1,47 +1,31 @@
-# CampusNav One-Click Starter for PowerShell
+# CampusNav one-click starter for Windows PowerShell.
+# Needs Java 17 or newer. Maven is downloaded automatically by mvnw.cmd the first time.
 $Host.UI.RawUI.WindowTitle = "CampusNav - Smart Campus Navigation System"
-Set-Location -Path $PSScriptRoot
+Set-Location -Path (Join-Path $PSScriptRoot "backend")
+
+try { java -version 2>&1 | Out-Null } catch {
+    Write-Host "[ERROR] Java was not found. Install Java 21 from https://adoptium.net and try again." -ForegroundColor Red
+    exit 1
+}
+
+if (-not $env:PORT) { $env:PORT = "8088" }
+$url = "http://localhost:$($env:PORT)/app"
 
 Write-Host "=====================================================================" -ForegroundColor Green
-Write-Host "         CampusNav - Smart Campus Navigation System                  " -ForegroundColor Green
-Write-Host "         Thapar Institute of Engineering and Technology              " -ForegroundColor Green
+Write-Host "   CampusNav - Smart Campus Navigation System (Java / Spring Boot)" -ForegroundColor Green
+Write-Host "   Thapar Institute of Engineering and Technology" -ForegroundColor Green
 Write-Host "=====================================================================" -ForegroundColor Green
-Write-Host ""
+Write-Host "   Navigation map:  $url"
+Write-Host "   Admin portal:    http://localhost:$($env:PORT)/admin"
+Write-Host "   Press Ctrl+C to stop."
 
-# Detect Python
-$pythonCmd = "python"
-try {
-    $ver = & python --version 2>&1
-    if ($LASTEXITCODE -ne 0) { throw }
-} catch {
-    if (Test-Path "$env:LOCALAPPDATA\Python\pythoncore-3.14-64\python.exe") {
-        $pythonCmd = "$env:LOCALAPPDATA\Python\pythoncore-3.14-64\python.exe"
-    } else {
-        $pythonCmd = "py"
+# Open the browser once the server answers
+Start-Job -ArgumentList $env:PORT, $url -ScriptBlock {
+    param($port, $url)
+    for ($i = 0; $i -lt 60; $i++) {
+        try { Invoke-WebRequest "http://localhost:$port/api/health" -UseBasicParsing -TimeoutSec 1 | Out-Null; Start-Process $url; break }
+        catch { Start-Sleep -Seconds 1 }
     }
-}
+} | Out-Null
 
-Write-Host "[*] Using Python: $pythonCmd" -ForegroundColor Cyan
-
-# Check DB
-if (-not (Test-Path "backend\instance\campusnav.db")) {
-    Write-Host "[*] Initializing database and seeding Thapar campus data..." -ForegroundColor Yellow
-    & $pythonCmd backend\init_db.py
-}
-
-Write-Host "[*] Starting server on http://localhost:5000 ..." -ForegroundColor Cyan
-Write-Host "[*] Opening browser..." -ForegroundColor Cyan
-
-# Open browser in 2 seconds
-Start-Job -ScriptBlock { Start-Sleep -Seconds 2; Start-Process "http://localhost:5000/app" } | Out-Null
-
-Write-Host ""
-Write-Host "=====================================================================" -ForegroundColor Green
-Write-Host "  SERVER ACTIVE! Press Ctrl+C to stop." -ForegroundColor White
-Write-Host "  Navigation App:  http://localhost:5000/app" -ForegroundColor White
-Write-Host "  Admin Portal:    http://localhost:5000/admin" -ForegroundColor White
-Write-Host "  Admin Account:   admin@thapar.edu | AdminPassword123!" -ForegroundColor Yellow
-Write-Host "=====================================================================" -ForegroundColor Green
-Write-Host ""
-
-& $pythonCmd backend\run.py
+& .\mvnw.cmd -q spring-boot:run

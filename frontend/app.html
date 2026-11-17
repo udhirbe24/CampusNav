@@ -39,12 +39,6 @@
             <div class="gmap-brand-subtitle">Thapar Institute of Eng. & Tech.</div>
           </div>
         </a>
-        <div style="display: flex; align-items: center; gap: 4px;">
-          <select id="algorithm-select" class="select" style="padding: 2px 6px; font-size: 11px; height: 26px; border-radius: 4px; border-color: #E8EAED;">
-            <option value="astar">A* Search</option>
-            <option value="dijkstra">Dijkstra</option>
-          </select>
-        </div>
       </div>
 
       <!-- Travel Mode Tabs (Google Maps Style: Walk, Step-Free, Fastest, Emergency) -->
@@ -140,14 +134,31 @@
           <span id="summary-distance" class="gmap-route-dist">(-- m)</span>
         </div>
 
-        <div id="summary-badges" style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;">
+        <div id="summary-badges" style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px;">
           <!-- Dynamically populated badges -->
         </div>
+        <div id="summary-engine" style="font-size: 11px; color: #5F6368; line-height: 1.4; margin-bottom: 12px;"></div>
 
         <!-- Action Buttons -->
-        <div class="gmap-actions-row">
-          <button class="gmap-btn-start" onclick="window.Utils.showToast('Walking navigation active! Follow the blue path on map.', 'success')">
+        <div id="detour-info" class="gmap-detour-info" style="display: none;"></div>
+
+        <!-- Guided walk: one step at a time, highlighted on the map -->
+        <div id="walk-controls" class="gmap-walk-controls" style="display: none;">
+          <div class="gmap-walk-progress" id="walk-progress">Step 1 of 1</div>
+          <div class="gmap-walk-instruction" id="walk-instruction"></div>
+          <div class="gmap-walk-buttons">
+            <button class="gmap-btn-alt" id="walk-prev-btn" onclick="window.routingController.walkStep(-1)">← Back</button>
+            <button class="gmap-btn-alt" id="walk-next-btn" onclick="window.routingController.walkStep(1)">Next →</button>
+            <button class="gmap-btn-alt gmap-btn-muted" onclick="window.routingController.stopWalk()">End walk</button>
+          </div>
+        </div>
+
+        <div class="gmap-actions-row" id="route-actions">
+          <button class="gmap-btn-start" onclick="window.routingController.startWalk()">
             🚶 Start Walk
+          </button>
+          <button class="gmap-btn-alt" title="Copy a link to this route" onclick="window.routingController.shareRoute()">
+            🔗 Share
           </button>
           <button id="calc-alternative-btn" class="gmap-btn-alt" onclick="window.routingController.calculateAlternativeRoute()">
             🔀 Detour
@@ -201,7 +212,7 @@
         🎯
       </button>
       <!-- Clear Active Route -->
-      <button class="gmap-fab-btn" title="Clear Route" onclick="window.campusMap.clearRoutes(); document.getElementById('route-details-panel').style.display='none';">
+      <button class="gmap-fab-btn" title="Clear Route" onclick="window.routingController.clearRoute()">
         ✕
       </button>
       <!-- Zoom In / Zoom Out Group -->
@@ -245,7 +256,7 @@
           <label class="form-label" for="report-type">Issue Type</label>
           <select id="report-type" class="select" required>
             <option value="OBSTRUCTION">Pathway Blocked / Obstructed</option>
-            <option value="CONSTRUCTION">Ongoing Construction / Repairs</option>
+            <option value="CLOSURE">Ongoing Construction / Repairs</option>
             <option value="DAMAGE">Damaged Pavement / Steps</option>
             <option value="HAZARD">Safety or Lighting Hazard</option>
             <option value="OTHER">Other Issue</option>
@@ -279,6 +290,7 @@
       window.campusMap.init();
       await window.searchController.init();
       window.routingController.init();
+      window.routingController.restoreFromUrl();
 
       // 2. Check user session
       try {

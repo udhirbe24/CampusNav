@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="style.css"><svg width="1000" height="640" viewBox="0 0 1000 640" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#4a5a55"/></marker></defs>
+<rect class="lane" x="20" y="14" width="960" height="112" rx="10"/><text class="h" x="36" y="36">CLIENT (BROWSER)</text>
+<rect class="box" x="40" y="48" width="220" height="62" rx="8"/><text class="t" x="150" y="74" text-anchor="middle">Map page (app.html)</text><text class="s" x="150" y="94" text-anchor="middle">Leaflet + OpenStreetMap</text>
+<rect class="box" x="280" y="48" width="200" height="62" rx="8"/><text class="t" x="380" y="74" text-anchor="middle">Admin portal</text><text class="s" x="380" y="94" text-anchor="middle">Chart.js dashboard</text>
+<rect class="box" x="500" y="48" width="200" height="62" rx="8"/><text class="t" x="600" y="74" text-anchor="middle">Sign-in / Register</text><text class="s" x="600" y="94" text-anchor="middle">auth.html</text>
+<rect class="boxg" x="720" y="48" width="240" height="62" rx="8"/><text class="t" x="840" y="74" text-anchor="middle">api.js</text><text class="s" x="840" y="94" text-anchor="middle">fetch() → JSON over HTTP</text>
+<path class="ln" d="M840 112 L840 160" marker-end="url(#a)"/><text class="s" x="830" y="142" text-anchor="end">REST /api/*  (JSON, session cookie)</text>
+<rect class="lane" x="20" y="164" width="960" height="112" rx="10"/><text class="h" x="36" y="186">WEB LAYER  ·  edu.thapar.campusnav.web</text>
+<rect class="box" x="40" y="198" width="168" height="62" rx="8"/><text class="t" x="124" y="224" text-anchor="middle">Navigation</text><text class="s" x="124" y="244" text-anchor="middle">Controller</text>
+<rect class="box" x="220" y="198" width="168" height="62" rx="8"/><text class="t" x="304" y="224" text-anchor="middle">Location</text><text class="s" x="304" y="244" text-anchor="middle">Controller</text>
+<rect class="box" x="400" y="198" width="168" height="62" rx="8"/><text class="t" x="484" y="224" text-anchor="middle">Pathway</text><text class="s" x="484" y="244" text-anchor="middle">Controller</text>
+<rect class="box" x="580" y="198" width="168" height="62" rx="8"/><text class="t" x="664" y="224" text-anchor="middle">Auth / Admin</text><text class="s" x="664" y="244" text-anchor="middle">Controllers</text>
+<rect class="boxg" x="760" y="198" width="200" height="62" rx="8"/><text class="t" x="860" y="224" text-anchor="middle">SessionAuth</text><text class="s" x="860" y="244" text-anchor="middle">ApiException handler</text>
+<path class="ln" d="M500 278 L500 312" marker-end="url(#a)"/>
+<rect class="lane" x="20" y="316" width="960" height="112" rx="10"/><text class="h" x="36" y="338">SERVICE LAYER  ·  edu.thapar.campusnav.service</text>
+<rect class="box" x="40" y="350" width="168" height="62" rx="8"/><text class="t" x="124" y="376" text-anchor="middle">Navigation</text><text class="s" x="124" y="396" text-anchor="middle">Service</text>
+<rect class="box" x="220" y="350" width="168" height="62" rx="8"/><text class="t" x="304" y="376" text-anchor="middle">GraphService</text><text class="s" x="304" y="396" text-anchor="middle">cached campus graph</text>
+<rect class="box" x="400" y="350" width="168" height="62" rx="8"/><text class="t" x="484" y="376" text-anchor="middle">CampusData</text><text class="s" x="484" y="396" text-anchor="middle">Service</text>
+<rect class="box" x="580" y="350" width="168" height="62" rx="8"/><text class="t" x="664" y="376" text-anchor="middle">Pathway / Auth</text><text class="s" x="664" y="396" text-anchor="middle">Services</text>
+<rect class="box" x="760" y="350" width="200" height="62" rx="8"/><text class="t" x="860" y="376" text-anchor="middle">DataSeeder</text><text class="s" x="860" y="396" text-anchor="middle">loads campus on 1st start</text>
+<path class="ln" d="M240 430 L240 472" marker-end="url(#a)"/><path class="ln" d="M700 430 L700 472" marker-end="url(#a)"/>
+<rect class="lane" x="20" y="476" width="470" height="148" rx="10"/><text class="h" x="36" y="498">ROUTING ENGINE  ·  algorithm (pure Java)</text>
+<rect class="boxd" x="40" y="512" width="430" height="44" rx="8"/><text class="t w" x="255" y="540" text-anchor="middle" style="fill:#fff">RouteOptimizer — picks A* or Dijkstra automatically</text>
+<rect class="box" x="40" y="566" width="135" height="44" rx="8"/><text class="t" x="107" y="593" text-anchor="middle">AStar</text>
+<rect class="box" x="185" y="566" width="135" height="44" rx="8"/><text class="t" x="252" y="593" text-anchor="middle">Dijkstra</text>
+<rect class="box" x="330" y="566" width="140" height="44" rx="8"/><text class="t" x="400" y="593" text-anchor="middle">CampusGraph</text>
+<rect class="lane" x="510" y="476" width="470" height="148" rx="10"/><text class="h" x="526" y="498">PERSISTENCE  ·  repository + model</text>
+<rect class="box" x="530" y="512" width="200" height="98" rx="8"/><text class="t" x="630" y="540" text-anchor="middle">Spring Data JPA</text><text class="s" x="630" y="562" text-anchor="middle">8 repositories</text><text class="s" x="630" y="582" text-anchor="middle">8 entity classes</text>
+<path class="ln" d="M732 561 L768 561" marker-end="url(#a)"/>
+<rect class="boxa" x="770" y="512" width="190" height="98" rx="8"/><text class="t" x="865" y="540" text-anchor="middle">H2 database</text><text class="s" x="865" y="562" text-anchor="middle">campusnav-data/</text><text class="s" x="865" y="582" text-anchor="middle">(file, embedded)</text>
+</svg>
