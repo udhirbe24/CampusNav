@@ -60,6 +60,33 @@
       flex-wrap: wrap;
     }
 
+    /* Both hero buttons share one size so they line up as a pair */
+    .hero-btn {
+      min-width: 240px;
+      height: 52px;
+      padding: 0 1.75rem;
+      font-size: 1rem;
+      border-radius: var(--radius-lg);
+    }
+
+    .hero-btn-ghost {
+      border-color: rgba(255, 255, 255, 0.45);
+      color: var(--color-white);
+    }
+
+    .hero-btn-ghost:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: var(--color-white);
+      color: var(--color-white);
+    }
+
+    @media (max-width: 560px) {
+      .hero-btn {
+        width: 100%;
+        max-width: 320px;
+      }
+    }
+
     .features-section {
       padding: var(--space-16) var(--space-6);
       max-width: 1200px;
@@ -202,10 +229,10 @@
       Graph-based pathfinding engineered with Dijkstra's and A* algorithms. Walk with confidence across academic blocks, libraries, hostels, and sports complexes.
     </p>
     <div class="hero-cta-group">
-      <a href="/app" class="btn btn-accent" style="padding: 0.85rem 1.75rem; font-size: 1rem;">
+      <a href="/app" class="btn btn-accent hero-btn">
         🧭 Launch Campus Map
       </a>
-      <a href="/auth" class="btn btn-outline" style="border-color: rgba(255,255,255,0.4); color: white;">
+      <a href="/auth" class="btn btn-outline hero-btn hero-btn-ghost">
         Student & Faculty Login
       </a>
     </div>
