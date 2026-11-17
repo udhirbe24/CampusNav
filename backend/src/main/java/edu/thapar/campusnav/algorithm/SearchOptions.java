@@ -26,9 +26,15 @@ public record SearchOptions(Weight weight, boolean accessibleOnly, Map<String, D
         return !accessibleOnly || (edge.accessible() && !edge.hasStairs());
     }
 
+    /**
+     * Seconds lost at every junction (looking for traffic, crossing, choosing a turn).
+     * It makes the Fastest mode prefer routes with fewer junctions, not just fewer meters.
+     */
+    public static final double JUNCTION_DELAY_SECONDS = 5.0;
+
     /** Cost of walking along an edge under this search's weighting. */
     public double cost(CampusGraph.Edge edge) {
-        double base = weight == Weight.TIME ? edge.seconds() : edge.distanceMeters();
+        double base = weight == Weight.TIME ? edge.seconds() + JUNCTION_DELAY_SECONDS : edge.distanceMeters();
         Double penalty = penalties.get(CampusGraph.edgeKey(edge.from(), edge.to()));
         return penalty == null ? base : base * penalty;
     }

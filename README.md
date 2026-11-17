@@ -11,6 +11,10 @@
 
 The routing engine models the campus walkways as a weighted graph and uses **A\* Search** (with a Haversine straight-line heuristic) and **Dijkstra's Algorithm**, choosing between them automatically. It finds the shortest, fastest or wheelchair-accessible (step-free) path, avoids walkways that admins have closed, suggests detours, and guides users to the nearest emergency facility.
 
+**Highlights:** shortest / fastest / step-free / emergency routing · automatic A\* or Dijkstra choice (shown with its reason) · detours with an extra-distance comparison · guided step-by-step walk (follows GPS on campus) · shareable route links (`/app?from=...&to=...&mode=...`) · directions that name landmarks passed · admin closures that reroute instantly · mobile bottom-sheet layout.
+
+Project report and slides: [`docs/CampusNav_Report.docx`](docs/CampusNav_Report.docx), [`docs/CampusNav_Presentation.pptx`](docs/CampusNav_Presentation.pptx).
+
 ---
 
 ## 2. Quick Start
@@ -151,7 +155,7 @@ For time-based routing the A\* heuristic is the straight-line distance divided b
 
 ### 5.4 Multi-Criteria Optimization Modes
 1. **Shortest Distance:** Minimizes cumulative physical distance in meters.
-2. **Fastest Route:** Minimizes estimated walking time (each walkway stores its own walking time).
+2. **Fastest Route:** Minimizes walking time plus a 5-second delay per junction passed, so it prefers routes with fewer crossings when lengths are close.
 3. **Wheelchair Accessible (Step-Free):** Evaluates edges with `is_accessible = True` and strictly prunes edges with `has_stairs = True`.
 4. **Alternative Route (Detour):** Makes the primary route's walkways 3× as expensive and searches again, producing a genuinely different path.
 5. **Emergency Route:** Calculates the optimal route to the closest active medical center, security office, or assembly point.
@@ -178,8 +182,8 @@ cd backend
 ./mvnw test
 ```
 
-26 JUnit tests cover:
-- **Algorithms (14):** Dijkstra optimality, A\* matches Dijkstra on every pair, A\* explores no more nodes than Dijkstra, step-free routes avoid stairs, closed walkways are avoided, unreachable destinations, automatic algorithm choice (including the fallback when the heuristic could overestimate), nearest-facility search, detours, turn instructions, Haversine accuracy.
+28 JUnit tests cover:
+- **Algorithms (16):** Fastest mode's junction delay, landmark names in merged directions, Dijkstra optimality, A\* matches Dijkstra on every pair, A\* explores no more nodes than Dijkstra, step-free routes avoid stairs, closed walkways are avoided, unreachable destinations, automatic algorithm choice (including the fallback when the heuristic could overestimate), nearest-facility search, detours, turn instructions, Haversine accuracy.
 - **API (12), on the real Thapar map:** every building is routable, every pair of points is reachable in every mode with A\* and Dijkstra agreeing, CS Block → Cricket Ground (regression), emergency routing, detours, closing and reopening a walkway, registration rules, login, admin-only access, hazard reports, page serving.
 
 ---

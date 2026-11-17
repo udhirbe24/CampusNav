@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="style.css"><svg width="1000" height="700" viewBox="0 0 1000 700" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#4a5a55"/></marker>
+<marker id="i" markerWidth="14" markerHeight="12" refX="13" refY="6" orient="auto"><path d="M0,0 L13,6 L0,12 z" fill="#fff" stroke="#4a5a55"/></marker></defs>
+<g font-size="12.5">
+<rect class="box" x="30" y="20" width="300" height="150" rx="6"/><rect class="boxd" x="30" y="20" width="300" height="30" rx="6"/><text x="180" y="40" text-anchor="middle" style="fill:#fff;font-weight:bold">NavigationService</text>
+<text x="42" y="70">- graphService : GraphService</text><text x="42" y="88">- optimizer : RouteOptimizer</text><line x1="30" y1="98" x2="330" y2="98" stroke="#173F35"/>
+<text x="42" y="116">+ calculateRoute(from, to, mode, …)</text><text x="42" y="134">+ alternativeRoute(from, to, path, …)</text><text x="42" y="152">+ emergencyRoute(from, type)</text>
+<rect class="box" x="370" y="20" width="300" height="168" rx="6"/><rect class="boxd" x="370" y="20" width="300" height="30" rx="6"/><text x="520" y="40" text-anchor="middle" style="fill:#fff;font-weight:bold">RouteOptimizer</text>
+<text x="382" y="70">- aStar : AStarPathFinder</text><text x="382" y="88">- dijkstra : DijkstraPathFinder</text><line x1="370" y1="98" x2="670" y2="98" stroke="#173F35"/>
+<text x="382" y="116">+ chooseAlgorithm(graph, n) : Choice</text><text x="382" y="134">+ route(graph, s, t, mode, …)</text><text x="382" y="152">+ alternative(graph, s, t, primary, …)</text><text x="382" y="170">+ nearestOf(graph, s, targets)</text>
+<rect class="box" x="710" y="20" width="260" height="150" rx="6"/><rect class="boxd" x="710" y="20" width="260" height="30" rx="6"/><text x="840" y="40" text-anchor="middle" style="fill:#fff;font-weight:bold">GraphService</text>
+<text x="722" y="70">- cached : CampusGraph</text><line x1="710" y1="80" x2="970" y2="80" stroke="#173F35"/><text x="722" y="98">+ graph() : CampusGraph</text><text x="722" y="116">+ invalidate()</text><text x="722" y="134">- build() from repositories</text>
+<rect class="boxg" x="250" y="250" width="290" height="96" rx="6"/><text x="395" y="272" text-anchor="middle" style="font-weight:bold">«interface» PathFinder</text><line x1="250" y1="282" x2="540" y2="282" stroke="#173F35"/>
+<text x="262" y="302">+ algorithm() : Algorithm</text><text x="262" y="322">+ findPath(graph, s, t, options)</text><text x="262" y="340" style="fill:#4a5a55">  : Optional&lt;PathResult&gt;</text>
+<rect class="box" x="60" y="420" width="290" height="110" rx="6"/><rect class="boxd" x="60" y="420" width="290" height="30" rx="6"/><text x="205" y="440" text-anchor="middle" style="fill:#fff;font-weight:bold">AStarPathFinder</text>
+<text x="72" y="470">~ heuristic(graph, n, t, options)</text><text x="72" y="490">+ findPath(…)  f = g + h</text><text x="72" y="510" style="fill:#4a5a55">h = Haversine (÷ max speed for time)</text>
+<rect class="box" x="440" y="420" width="290" height="110" rx="6"/><rect class="boxd" x="440" y="420" width="290" height="30" rx="6"/><text x="585" y="440" text-anchor="middle" style="fill:#fff;font-weight:bold">DijkstraPathFinder</text>
+<text x="452" y="470">+ findPath(…)</text><text x="452" y="490">+ findNearest(graph, s, targets, …)</text><text x="452" y="510" style="fill:#4a5a55">binary-heap PriorityQueue</text>
+<rect class="box" x="770" y="230" width="200" height="190" rx="6"/><rect class="boxd" x="770" y="230" width="200" height="30" rx="6"/><text x="870" y="250" text-anchor="middle" style="fill:#fff;font-weight:bold">CampusGraph</text>
+<text x="782" y="280">- nodes : Map</text><text x="782" y="298">- adjacency : Map&lt;List&lt;Edge&gt;&gt;</text><line x1="770" y1="308" x2="970" y2="308" stroke="#173F35"/>
+<text x="782" y="328">+ addNode(Node)</text><text x="782" y="346">+ addEdge(Edge, bidir)</text><text x="782" y="364">+ outgoing(key)</text><text x="782" y="382">+ nearestNode(lat, lon)</text><text x="782" y="400">+ maxSpeed()</text>
+<rect class="boxg" x="770" y="470" width="200" height="74" rx="6"/><text x="870" y="492" text-anchor="middle" style="font-weight:bold">«record» Node, Edge</text><text x="782" y="514">key, lat, lon, label …</text><text x="782" y="532">distance, seconds, stairs …</text>
+<rect class="boxg" x="60" y="590" width="290" height="88" rx="6"/><text x="205" y="612" text-anchor="middle" style="font-weight:bold">«record» SearchOptions</text><text x="72" y="634">weight : DISTANCE | TIME</text><text x="72" y="652">accessibleOnly, penalties</text><text x="72" y="670">+ canUse(edge), cost(edge)</text>
+<rect class="boxg" x="440" y="590" width="290" height="88" rx="6"/><text x="585" y="612" text-anchor="middle" style="font-weight:bold">«record» PathResult → RouteResult</text><text x="452" y="634">nodes, edges, cost, nodesExplored</text><text x="452" y="652">steps, summary (algorithm,</text><text x="452" y="670">algorithm_reason), geojson</text>
+</g>
+<g class="ln">
+<path d="M330 95 L368 95" marker-end="url(#a)"/><path d="M670 95 L708 95" marker-end="url(#a)" transform="translate(0,0)"/>
+<path d="M180 170 L180 208 L840 208 L840 174" marker-end="url(#a)" stroke-dasharray="4 3"/>
+<path d="M205 418 L330 348" marker-end="url(#i)"/><path d="M585 418 L470 348" marker-end="url(#i)"/>
+<path d="M480 188 L410 248" marker-end="url(#a)"/>
+<path d="M545 300 L768 320" marker-end="url(#a)"/><path d="M870 420 L870 468" marker-end="url(#a)"/>
+<path d="M205 530 L205 588" marker-end="url(#a)"/><path d="M585 530 L585 588" marker-end="url(#a)"/>
+</g>
+<text class="s" x="676" y="86">uses</text><text class="s" x="560" y="202">uses (graph)</text><text class="s" x="452" y="236">delegates</text><text class="s" x="350" y="392" text-anchor="middle">implements</text>
+</svg>

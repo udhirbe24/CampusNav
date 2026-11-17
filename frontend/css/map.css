@@ -68,6 +68,8 @@
 /* Google Maps Campus Place Labels */
 .gmap-place-marker {
   display: flex;
+  width: max-content;      /* pill hugs its text and stays centred on the place */
+  margin: 0 auto;
   align-items: center;
   gap: 5px;
   background-color: #FFFFFF;
@@ -280,3 +282,16 @@
   composes: gmap-fab-btn;
 }
 
+
+/* Labels hidden when they would overlap a more important label (shown again on hover) */
+.gmap-place-marker.label-hidden .gmap-place-label {
+  display: none;
+}
+
+.gmap-place-marker.label-hidden {
+  padding: 3px;
+}
+
+.gmap-place-marker.label-hidden:hover .gmap-place-label {
+  display: inline;
+}

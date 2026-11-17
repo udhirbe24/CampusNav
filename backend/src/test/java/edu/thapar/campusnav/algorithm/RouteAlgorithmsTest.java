@@ -165,6 +165,40 @@ class RouteAlgorithmsTest {
     }
 
     @Test
+    void fastestPrefersFewerJunctionsWhenDistancesAreClose() {
+        // P -> Q direct is 105 m; P -> X -> Y -> Q is 100 m but passes two extra junctions
+        CampusGraph g = new CampusGraph();
+        String[] keys = {"P", "X", "Y", "Q"};
+        for (int i = 0; i < keys.length; i++) {
+            g.addNode(new CampusGraph.Node(keys[i], LAT, LON + i * 0.0003, true, "intersection", keys[i], null));
+        }
+        g.addEdge(new CampusGraph.Edge("P", "Q", 105, 75, false, false, true, false, "paved", null), true);
+        g.addEdge(new CampusGraph.Edge("P", "X", 34, 24, false, false, true, false, "paved", null), true);
+        g.addEdge(new CampusGraph.Edge("X", "Y", 33, 24, false, false, true, false, "paved", null), true);
+        g.addEdge(new CampusGraph.Edge("Y", "Q", 33, 24, false, false, true, false, "paved", null), true);
+
+        RouteResult shortest = optimizer.route(g, "P", "Q", RouteOptimizer.Mode.SHORTEST, false).orElseThrow();
+        RouteResult fastest = optimizer.route(g, "P", "Q", RouteOptimizer.Mode.FASTEST, false).orElseThrow();
+        assertThat(shortest.pathNodes()).containsExactly("P", "X", "Y", "Q");
+        assertThat(fastest.pathNodes()).containsExactly("P", "Q");
+    }
+
+    @Test
+    void longStraightStepsNameTheLandmarksPassed() {
+        CampusGraph g = new CampusGraph();
+        g.addNode(new CampusGraph.Node("S", LAT, LON, true, "entrance", "Hostel A", 1L));
+        g.addNode(new CampusGraph.Node("M", LAT, LON + STEP, true, "entrance", "Library", 2L));
+        g.addNode(new CampusGraph.Node("T", LAT, LON + 2 * STEP, true, "entrance", "CS Block", 3L));
+        g.addEdge(new CampusGraph.Edge("S", "M", 100, 72, false, false, true, false, "paved", null), true);
+        g.addEdge(new CampusGraph.Edge("M", "T", 100, 72, false, false, true, false, "paved", null), true);
+
+        RouteResult r = optimizer.route(g, "S", "T", RouteOptimizer.Mode.SHORTEST, false).orElseThrow();
+        assertThat(r.steps()).hasSize(2); // one merged walking step + arrival
+        assertThat(r.steps().get(0).instruction()).isEqualTo("Head east toward CS Block, passing Library");
+        assertThat(r.steps().get(0).distanceMeters()).isEqualTo(200.0);
+    }
+
+    @Test
     void turnInstructions() {
         assertThat(RouteOptimizer.turnInstruction(5)).isEqualTo("Continue straight");
         assertThat(RouteOptimizer.turnInstruction(90)).isEqualTo("Turn right");

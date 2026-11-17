@@ -1,0 +1,12 @@
+body{margin:0;background:#fff;font-family:Arial,Helvetica,sans-serif}
+svg text{font-family:Arial,Helvetica,sans-serif;fill:#1f2a27}
+.box{fill:#fff;stroke:#173F35;stroke-width:1.6}
+.boxg{fill:#EEF3EF;stroke:#173F35;stroke-width:1.6}
+.boxd{fill:#173F35;stroke:#173F35}
+.boxa{fill:#FFF6E3;stroke:#B9832A;stroke-width:1.6}
+.lane{fill:#F7F8F6;stroke:#B9C4BE;stroke-width:1;stroke-dasharray:5 4}
+.ln{stroke:#4a5a55;stroke-width:1.5;fill:none}
+.t{font-size:15px;font-weight:bold}
+.s{font-size:12.5px;fill:#4a5a55}
+.w{fill:#fff}
+.h{font-size:13px;font-weight:bold;fill:#5b6b66;letter-spacing:.5px}

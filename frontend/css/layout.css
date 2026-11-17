@@ -375,7 +375,8 @@
   border-top: 1px solid #E8EAED;
   padding: 14px 16px;
   border-radius: 0 0 8px 8px;
-  max-height: 380px;
+  max-height: calc(100vh - 370px); /* stops above the campus badge */
+  min-height: 160px;
   overflow-y: auto;
 }
 
@@ -407,8 +408,95 @@
 
 .gmap-actions-row {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 12px;
+}
+
+/* Start Walk gets its own row; the secondary actions share the row below */
+.gmap-actions-row .gmap-btn-start {
+  flex: 1 0 100%;
+}
+
+.gmap-actions-row .gmap-btn-alt {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0 6px;
+}
+
+.gmap-btn-muted {
+  color: #5F6368;
+}
+
+/* Detour comparison line */
+.gmap-detour-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #3C4043;
+  background: #FEF7E0;
+  border: 1px solid #FBE6A2;
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+}
+
+.gmap-detour-swatch {
+  width: 18px;
+  height: 0;
+  border-top: 3px dashed #F9AB00;
+  flex-shrink: 0;
+}
+
+/* Guided walk */
+.gmap-walk-controls {
+  background: #E8F0FE;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+
+.gmap-walk-progress {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1A73E8;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.gmap-walk-instruction {
+  font-size: 14px;
+  font-weight: 600;
+  color: #202124;
+  margin: 4px 0 10px;
+  line-height: 1.35;
+}
+
+.gmap-walk-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.gmap-walk-buttons .gmap-btn-alt {
+  flex: 1;
+  padding: 0 8px;
+}
+
+.gmap-walk-buttons .gmap-btn-alt:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.gmap-step-item.active {
+  background: #E8F0FE;
+  border-radius: 8px;
+  padding: 6px;
+  margin: 0 -6px;
+}
+
+.gmap-step-item {
+  cursor: pointer;
 }
 
 .gmap-btn-start {
@@ -429,7 +517,7 @@
 }
 
 .gmap-btn-start:hover {
-  background: #155724;
+  background: #1765CC;
 }
 
 .gmap-btn-alt {
@@ -442,6 +530,12 @@
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  white-space: nowrap;
+  line-height: 1;
 }
 
 .gmap-btn-alt:hover {
@@ -543,16 +637,44 @@
   border: 1px solid #DADCE0;
 }
 
-/* Responsive Mobile Layout */
-@media (max-width: 600px) {
+/* Responsive Mobile Layout: the directions card becomes a bottom sheet so the map stays visible */
+@media (max-width: 767px) {
   .gmap-direction-card {
-    top: 8px;
+    top: auto;
+    bottom: 8px;
     left: 8px;
     right: 8px;
     width: auto;
+    max-width: none;
+    max-height: 56vh;
+    overflow-y: auto;
+    border-radius: 14px;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.18);
+  }
+
+  .gmap-route-panel {
+    max-height: none;
+    min-height: 0;
+    overflow: visible;
   }
 
   .gmap-top-strip {
+    top: 8px;
+    right: 8px;
+  }
+
+  .gmap-top-strip .gmap-header-btn:not(#auth-nav-btn) {
+    display: none;
+  }
+
+  .gmap-fab-stack {
+    top: 56px;
+    bottom: auto;
+    right: 8px;
+  }
+
+  .gmap-zoom-group,
+  .campus-lockdown-badge {
     display: none;
   }
 }

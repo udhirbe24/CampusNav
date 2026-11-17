@@ -206,6 +206,7 @@ public class RouteOptimizer {
         double stepBearing = 0;
         boolean stairs = false;
         boolean ramp = false;
+        List<String> passing = new ArrayList<>();
         Double previousBearing = null;
 
         for (CampusGraph.Edge edge : path.edges()) {
@@ -221,12 +222,17 @@ public class RouteOptimizer {
             boolean straight = previousBearing != null && turn.equals("Continue straight");
             if (straight && action != null && !edge.hasStairs() && !stairs) {
                 distance += edge.distanceMeters(); // merge into the current step
+                if (u.buildingId() != null) {
+                    passing.add(u.label()); // a named place walked past on the way
+                }
                 to = edge.to();
                 ramp |= edge.hasRamp();
             } else {
                 if (action != null) {
-                    steps.add(step(graph, steps.size() + 1, action, from, to, distance, stepBearing, stairs, ramp));
+                    steps.add(step(graph, steps.size() + 1, action, from, to, distance, stepBearing, stairs, ramp,
+                            passing));
                 }
+                passing = new ArrayList<>();
                 action = turn;
                 from = edge.from();
                 to = edge.to();
@@ -239,7 +245,7 @@ public class RouteOptimizer {
                 previousBearing = bearing;
             }
         }
-        steps.add(step(graph, steps.size() + 1, action, from, to, distance, stepBearing, stairs, ramp));
+        steps.add(step(graph, steps.size() + 1, action, from, to, distance, stepBearing, stairs, ramp, passing));
 
         String destination = nodes.get(nodes.size() - 1);
         steps.add(new RouteResult.Step(steps.size() + 1, "Arrive at " + graph.node(destination).label(),
@@ -248,8 +254,13 @@ public class RouteOptimizer {
     }
 
     private static RouteResult.Step step(CampusGraph graph, int number, String action, String from, String to,
-                                         double meters, double bearing, boolean stairs, boolean ramp) {
+                                         double meters, double bearing, boolean stairs, boolean ramp,
+                                         List<String> passing) {
         String instruction = action + " toward " + graph.node(to).label();
+        if (!passing.isEmpty()) {
+            // name up to two landmarks so long straight stretches are easy to follow
+            instruction += ", passing " + String.join(" and ", passing.subList(0, Math.min(2, passing.size())));
+        }
         if (stairs) {
             instruction += " (includes stairs)";
         } else if (ramp) {

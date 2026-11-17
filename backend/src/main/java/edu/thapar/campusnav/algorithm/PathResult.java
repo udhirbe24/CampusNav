@@ -18,8 +18,10 @@ public record PathResult(List<String> nodes, List<CampusGraph.Edge> edges, doubl
         return edges.stream().mapToDouble(CampusGraph.Edge::distanceMeters).sum();
     }
 
+    /** Walking time plus a short delay at each junction passed on the way. */
     public double seconds() {
-        return edges.stream().mapToDouble(CampusGraph.Edge::seconds).sum();
+        double walking = edges.stream().mapToDouble(CampusGraph.Edge::seconds).sum();
+        return walking + Math.max(0, edges.size() - 1) * SearchOptions.JUNCTION_DELAY_SECONDS;
     }
 
     public boolean hasStairs() {
