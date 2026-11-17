@@ -55,7 +55,7 @@
           <span class="gmap-mode-icon">⚡</span>
           <span>Fastest</span>
         </button>
-        <button class="gmap-mode-tab mode-pill" data-mode="emergency" title="Route to Nearest Medical or Security Facility">
+        <button class="gmap-mode-tab mode-pill" data-mode="emergency" title="Emergency route to the Dispensary or the Main Gate">
           <span class="gmap-mode-icon">🚨</span>
           <span>Emergency</span>
         </button>
@@ -241,6 +241,33 @@
       <p style="font-size: var(--text-xs); color: var(--color-text-muted); margin-top: 10px; text-align: left;">
         All gates (1, 2, 3, 4), hostels (A through M), academic departments, CS Block, libraries, and sports areas shown on this official layout are mathematically mapped into the CampusNav routing graph.
       </p>
+    </div>
+  </div>
+
+  <!-- Modal: Emergency destination choice -->
+  <div class="modal-backdrop" id="modal-emergency-choice" role="dialog" aria-modal="true" aria-labelledby="emergency-choice-title">
+    <div class="modal emergency-choice-modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="emergency-choice-title">🚨 Where do you need to go?</h3>
+        <button class="modal-close" aria-label="Cancel" onclick="window.routingController.cancelEmergencyChoice()">✕</button>
+      </div>
+      <p class="emergency-choice-hint">Pick one and we'll show the fastest walking route from where you are.</p>
+      <div class="emergency-choice-list">
+        <button type="button" class="emergency-choice" data-target="MEDICAL" onclick="window.routingController.chooseEmergencyTarget('MEDICAL')">
+          <span class="emergency-choice-icon">🏥</span>
+          <span class="emergency-choice-text">
+            <strong>Dispensary</strong>
+            <small>Injury, illness or first aid. Doctor on duty.</small>
+          </span>
+        </button>
+        <button type="button" class="emergency-choice" data-target="SECURITY" onclick="window.routingController.chooseEmergencyTarget('SECURITY')">
+          <span class="emergency-choice-icon">🚪</span>
+          <span class="emergency-choice-text">
+            <strong>Main Gate (Gate 1)</strong>
+            <small>Security help, leaving campus, or meeting an ambulance.</small>
+          </span>
+        </button>
+      </div>
     </div>
   </div>
 

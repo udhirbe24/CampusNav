@@ -129,6 +129,24 @@ class CampusNavApiTest {
     }
 
     @Test
+    void emergencyRouteGoesToTheDestinationTheUserChose() throws Exception {
+        JsonNode dispensary = call(postJson("/api/routes/emergency",
+                Map.of("from_node", "n_hh", "facility_type", "MEDICAL"), null, 200)).get("data");
+        assertThat(lastNode(dispensary)).isEqualTo("n_dispensary");
+        assertThat(dispensary.get("emergency_facility").get("facility_type").asText()).isEqualTo("MEDICAL");
+
+        JsonNode gate = call(postJson("/api/routes/emergency",
+                Map.of("from_node", "n_hh", "facility_type", "SECURITY"), null, 200)).get("data");
+        assertThat(lastNode(gate)).isEqualTo("n_gate1");
+        assertThat(gate.get("emergency_facility").get("name").asText()).startsWith("Main Gate");
+    }
+
+    private static String lastNode(JsonNode route) {
+        JsonNode path = route.get("path_nodes");
+        return path.get(path.size() - 1).asText();
+    }
+
+    @Test
     void alternativeRouteDiffers() throws Exception {
         JsonNode primary = call(postJson("/api/routes/calculate",
                 Map.of("from_node", "n_hd", "to_node", "n_old_lib"), null, 200)).get("data");

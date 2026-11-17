@@ -68,6 +68,7 @@ public class DataSeeder implements ApplicationRunner {
     public void run(ApplicationArguments args) throws IOException {
         seedAdmin();
         if (buildingRepository.count() > 0) {
+            renameMainGateFacility();
             log.info("Campus data already loaded ({} buildings, {} nodes, {} pathways).",
                     buildingRepository.count(), nodeRepository.count(), pathwayRepository.count());
             return;
@@ -166,10 +167,23 @@ public class DataSeeder implements ApplicationRunner {
         return count;
     }
 
+    /** Emergency mode offers exactly two destinations; this is the name shown for the gate. */
+    static final String MAIN_GATE_NAME = "Main Gate (Gate 1) - Security";
+
+    /** Databases created before the rename still call the gate "Security Office (Gate 1)". */
+    private void renameMainGateFacility() {
+        facilityRepository.findByActiveTrueAndFacilityType("SECURITY").stream()
+                .filter(f -> "Security Office (Gate 1)".equals(f.getName()))
+                .forEach(f -> {
+                    f.setName(MAIN_GATE_NAME);
+                    facilityRepository.save(f);
+                });
+    }
+
     private void seedEmergencyFacilities(Map<String, NavigationNode> nodes) {
         addFacility(nodes, "n_dispensary", "Dispensary / Campus Health Centre", "MEDICAL", "+91-175-2393021",
                 "Campus health centre with first aid and a doctor on duty.");
-        addFacility(nodes, "n_gate1", "Security Office (Gate 1)", "SECURITY", "+91-175-2393000",
+        addFacility(nodes, "n_gate1", MAIN_GATE_NAME, "SECURITY", "+91-175-2393000",
                 "Main security post and visitor desk at the Bhadson Road gate.");
         addFacility(nodes, "n_nirvana", "Assembly Point - Nirvana Park", "ASSEMBLY", null,
                 "Open-ground emergency assembly point in the central park.");

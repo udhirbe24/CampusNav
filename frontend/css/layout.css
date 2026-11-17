@@ -678,3 +678,68 @@
     display: none;
   }
 }
+
+/* --- Emergency destination choice --- */
+.emergency-choice-hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-4);
+}
+.emergency-choice-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.emergency-choice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  padding: var(--space-4);
+  background: #fff;
+  border: 1.5px solid #F4C7C3;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  transition: background-color .15s, border-color .15s, transform .15s;
+}
+.emergency-choice:hover,
+.emergency-choice:focus-visible {
+  background: #FCE8E6;
+  border-color: #D93025;
+  outline: none;
+  transform: translateY(-1px);
+}
+.emergency-choice.selected {
+  background: #FCE8E6;
+  border-color: #D93025;
+}
+.emergency-choice-icon {
+  flex: 0 0 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #FCE8E6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+.emergency-choice-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.emergency-choice-text strong {
+  font-size: var(--text-base);
+  color: #B3261E;
+}
+.emergency-choice-text small {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+/* Dialogs must sit above the floating map card, controls and Leaflet panes (z-index up to 1100) */
+.modal-backdrop {
+  z-index: 2000;
+}

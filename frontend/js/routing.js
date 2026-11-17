@@ -6,6 +6,7 @@
 class RoutingController {
   constructor() {
     this.currentMode = 'shortest';
+    this.emergencyTarget = null; // 'MEDICAL' (Dispensary) or 'SECURITY' (Main Gate), chosen by the user
     this.accessibleOnly = false;
     this.currentRouteData = null;
     this.alternativeRouteData = null;
@@ -20,15 +21,32 @@ class RoutingController {
     const pills = document.querySelectorAll('.mode-pill, .gmap-mode-tab');
     pills.forEach(pill => {
       pill.addEventListener('click', e => {
+        // Emergency always asks first: Dispensary or Main Gate?
+        if (pill.dataset.mode === 'emergency') {
+          this.askEmergencyTarget();
+          return;
+        }
+
+        const leavingEmergency = this.currentMode === 'emergency';
         pills.forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
 
         this.currentMode = pill.dataset.mode;
         this.accessibleOnly = (this.currentMode === 'accessible');
 
-        // If emergency mode clicked, route immediately to nearest medical/security
-        if (this.currentMode === 'emergency') {
-          this.triggerEmergencyRouting();
+        // The emergency facility was only a stand-in destination; drop it when leaving the mode
+        if (leavingEmergency && this.emergencyTarget) {
+          this.emergencyTarget = null;
+          window.searchController.destNodeKey = null;
+          window.searchController.destLabel = null;
+          const destInput = document.getElementById('dest-location-input');
+          if (destInput) destInput.value = '';
+          this.stopWalk();
+          this.currentRouteData = null;
+          this.alternativeRouteData = null;
+          this.hideDetourInfo();
+          window.campusMap.clearRoutes();
+          document.getElementById('route-details-panel').style.display = 'none';
           return;
         }
 
@@ -163,16 +181,54 @@ class RoutingController {
     }
   }
 
+  /** Opens the "Dispensary or Main Gate?" question. */
+  askEmergencyTarget() {
+    document.querySelectorAll('.emergency-choice').forEach(btn => {
+      btn.classList.toggle('selected', btn.dataset.target === this.emergencyTarget);
+    });
+    window.Utils.openModal('modal-emergency-choice');
+    setTimeout(() => {
+      const preferred = document.querySelector('.emergency-choice.selected') || document.querySelector('.emergency-choice');
+      preferred?.focus();
+    }, 50);
+  }
+
+  /** The user answered: switch to Emergency mode and route to that place. */
+  chooseEmergencyTarget(target) {
+    window.Utils.closeModal('modal-emergency-choice');
+    this.emergencyTarget = target;
+    this.currentMode = 'emergency';
+    this.accessibleOnly = false;
+    document.querySelectorAll('.mode-pill, .gmap-mode-tab').forEach(p => {
+      p.classList.toggle('active', p.dataset.mode === 'emergency');
+    });
+    const destInput = document.getElementById('dest-location-input');
+    if (destInput) destInput.value = RoutingController.EMERGENCY_TARGETS[target].label;
+    this.triggerEmergencyRouting();
+  }
+
+  /** Closing the question without answering leaves the previous mode as it was. */
+  cancelEmergencyChoice() {
+    window.Utils.closeModal('modal-emergency-choice');
+  }
+
   async triggerEmergencyRouting() {
+    // Never guess the destination: ask if the user hasn't chosen yet
+    if (!this.emergencyTarget) {
+      this.askEmergencyTarget();
+      return;
+    }
+    const target = RoutingController.EMERGENCY_TARGETS[this.emergencyTarget];
+
     const startKey = window.searchController.startNodeKey;
     if (!startKey) {
-      window.Utils.showToast('Where are you? Choose your current location (or tap ⌖ for GPS) to find the nearest help.', 'warning', 5000);
+      window.Utils.showToast(`Where are you? Choose your current location (or tap ⌖ for GPS) to get to the ${target.label}.`, 'warning', 5000);
       document.getElementById('start-location-input')?.focus();
       return;
     }
 
     try {
-      const res = await window.api.getEmergencyRoute({ fromNode: startKey });
+      const res = await window.api.getEmergencyRoute({ fromNode: startKey, facilityType: this.emergencyTarget });
 
       if (!res.success || !res.data) {
         window.Utils.showToast('Could not route to emergency facility.', 'error');
@@ -187,7 +243,7 @@ class RoutingController {
       window.campusMap.drawRoute(res.data.geojson, false);
 
       const facility = res.data.emergency_facility || {};
-      const destLabel = `${facility.name || 'Emergency Facility'} (${facility.facility_type || 'MEDICAL'})`;
+      const destLabel = target.label;
       const destInput = document.getElementById('dest-location-input');
       if (destInput) destInput.value = destLabel;
       // Remember the facility as the destination so switching mode re-routes to it
@@ -200,10 +256,10 @@ class RoutingController {
       const detailsDrawer = document.getElementById('route-details-panel');
       if (detailsDrawer) detailsDrawer.style.display = 'block';
 
-      window.Utils.showToast(`Emergency Route: ${facility.name} (Contact: ${facility.contact_number || '112'})`, 'success', 5000);
+      window.Utils.showToast(`Route to the ${target.label}. Contact: ${facility.contact_number || target.phone}`, 'success', 5000);
 
     } catch (err) {
-      window.Utils.showToast('Emergency routing failed.', 'error');
+      window.Utils.showToast(err.message || `Could not find a route to the ${target.label}.`, 'error');
     }
   }
 
@@ -437,5 +493,21 @@ class RoutingController {
     window.searchController.selectLocation('dest', nodeKey, label);
   }
 }
+
+/** The two places Emergency mode can take you; the user always picks one. */
+RoutingController.EMERGENCY_TARGETS = {
+  MEDICAL: { label: 'Dispensary', phone: '+91-175-2393021' },
+  SECURITY: { label: 'Main Gate (Gate 1)', phone: '+91-175-2393000' }
+};
+
+// Esc or a click outside the box closes the emergency question without changing mode
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('modal-emergency-choice')?.classList.contains('active')) {
+    window.routingController.cancelEmergencyChoice();
+  }
+});
+document.getElementById('modal-emergency-choice')?.addEventListener('click', e => {
+  if (e.target.id === 'modal-emergency-choice') window.routingController.cancelEmergencyChoice();
+});
 
 window.routingController = new RoutingController();
